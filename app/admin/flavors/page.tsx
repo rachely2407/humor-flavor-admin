@@ -13,52 +13,66 @@ export default async function AdminFlavorsPage() {
     .select("id, created_datetime_utc, description, slug")
     .order("id", { ascending: true });
 
-  if (error) {
-    throw new Error(error.message);
-  }
+  if (error) throw new Error(error.message);
 
   return (
-    <AdminShell title="Humor Flavors">
-      <div style={{ marginBottom: 16 }}>
-        <Link className="btn btn-primary" href="/admin/flavors/new">
-          + New humor flavor
-        </Link>
-      </div>
+    <AdminShell
+      title="Humor Flavors"
+      current="flavors"
+      description="Manage humor flavor records in a cleaner, more professional catalog view."
+    >
+      <section className="pretty-panel">
+        <div className="toolbar">
+          <div>
+            <h2 className="section-title">Flavor catalog</h2>
+            <p className="section-subtitle">
+              Review all humor flavor entries, open records, and create new ones.
+            </p>
+          </div>
 
-      <div className="card table-wrap" style={{ padding: 20 }}>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Slug</th>
-              <th>Description</th>
-              <th>Created</th>
-              <th>Open</th>
-            </tr>
-          </thead>
-          <tbody>
-            {flavors?.map((flavor) => (
-              <tr key={flavor.id}>
-                <td>{flavor.id}</td>
-                <td>
-                  <strong>{flavor.slug}</strong>
-                </td>
-                <td>{flavor.description || "—"}</td>
-                <td>
-                  {flavor.created_datetime_utc
-                    ? new Date(flavor.created_datetime_utc).toLocaleString()
-                    : "—"}
-                </td>
-                <td>
-                  <Link className="btn" href={`/admin/flavors/${flavor.id}`}>
-                    Open
-                  </Link>
-                </td>
+          <Link href="/admin/flavors/new" className="btn btn-primary">
+            + New humor flavor
+          </Link>
+        </div>
+
+        <div className="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th style={{ width: 100 }}>ID</th>
+                <th style={{ width: 220 }}>Slug</th>
+                <th>Description</th>
+                <th style={{ width: 240 }}>Created</th>
+                <th style={{ width: 130 }}>Open</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {flavors?.map((flavor) => (
+                <tr key={flavor.id}>
+                  <td>{flavor.id}</td>
+                  <td>
+                    <strong>{flavor.slug}</strong>
+                  </td>
+                  <td>{flavor.description || "—"}</td>
+                  <td>
+                    {flavor.created_datetime_utc
+                      ? new Date(flavor.created_datetime_utc).toLocaleString()
+                      : "—"}
+                  </td>
+                  <td>
+                    <Link
+                      href={`/admin/flavors/${flavor.id}`}
+                      className="btn"
+                    >
+                      Open
+                    </Link>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
     </AdminShell>
   );
 }
