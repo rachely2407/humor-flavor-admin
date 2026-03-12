@@ -1,10 +1,15 @@
+import Link from "next/link";
 import { AdminShell } from "@/components/admin-shell";
 import { StepCreator } from "@/components/step-creator";
 import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 import { revalidatePath } from "next/cache";
 
-async function moveStep(stepId: number, flavorId: number, direction: "up" | "down") {
+async function moveStep(
+  stepId: number,
+  flavorId: number,
+  direction: "up" | "down"
+) {
   "use server";
 
   const admin = supabaseAdmin();
@@ -21,6 +26,7 @@ async function moveStep(stepId: number, flavorId: number, direction: "up" | "dow
   if (index === -1) return;
 
   const swapIndex = direction === "up" ? index - 1 : index + 1;
+
   if (swapIndex < 0 || swapIndex >= steps.length) return;
 
   const current = steps[index];
@@ -55,10 +61,19 @@ export default async function AdminStepsPage() {
     admin
       .from("humor_flavor_steps")
       .select(
-        "id, humor_flavor_id, order_by, llm_temperature, llm_model_id, humor_flavor_step_type_id, description"
+        `
+        id,
+        humor_flavor_id,
+        order_by,
+        llm_temperature,
+        llm_model_id,
+        humor_flavor_step_type_id,
+        description
+      `
       )
       .order("humor_flavor_id", { ascending: true })
       .order("order_by", { ascending: true }),
+
     admin.from("humor_flavors").select("id, slug"),
     admin.from("humor_flavor_step_types").select("id"),
     admin.from("llm_models").select("id"),
@@ -79,19 +94,20 @@ export default async function AdminStepsPage() {
     <AdminShell
       title="Flavor Steps"
       current="steps"
-      description="Structured view of prompt-chain steps with cleaner grouping, better readability, and a more professional operations layout."
+      description="Manage prompt-chain steps for humor flavors, including editing, ordering, and configuration."
     >
       <section className="pretty-panel">
+
         <div className="toolbar">
           <div>
             <h2 className="section-title">Step definitions</h2>
             <p className="section-subtitle">
-              Review and manage flavor step order, model configuration, and descriptions.
+              Each humor flavor consists of ordered prompt-chain steps.
             </p>
           </div>
         </div>
 
-        <div style={{ marginBottom: 20 }}>
+        <div style={{ marginBottom: 24 }}>
           <StepCreator
             flavors={flavors ?? []}
             stepTypes={stepTypes ?? []}
@@ -106,29 +122,48 @@ export default async function AdminStepsPage() {
             <thead>
               <tr>
                 <th style={{ width: 80 }}>ID</th>
-                <th style={{ width: 140 }}>Flavor ID</th>
+                <th style={{ width: 120 }}>Flavor ID</th>
                 <th style={{ width: 180 }}>Flavor</th>
-                <th style={{ width: 110 }}>Order</th>
+                <th style={{ width: 100 }}>Order</th>
                 <th style={{ width: 120 }}>Temp</th>
-                <th style={{ width: 120 }}>Model</th>
-                <th style={{ width: 120 }}>Step Type</th>
+                <th style={{ width: 140 }}>Model</th>
+                <th style={{ width: 140 }}>Step Type</th>
                 <th>Description</th>
-                <th style={{ width: 150 }}>Reorder</th>
+                <th style={{ width: 220 }}>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {(steps ?? []).map((step) => (
                 <tr key={step.id}>
                   <td>{step.id}</td>
+
                   <td>{step.humor_flavor_id}</td>
-                  <td>{flavorMap.get(step.humor_flavor_id) ?? "—"}</td>
+
+                  <td>
+                    {flavorMap.get(step.humor_flavor_id) ?? "—"}
+                  </td>
+
                   <td>{step.order_by}</td>
+
                   <td>{step.llm_temperature ?? "—"}</td>
+
                   <td>{step.llm_model_id}</td>
+
                   <td>{step.humor_flavor_step_type_id}</td>
-                  <td>{step.description || "—"}</td>
+
+                  <td>{step.description ?? "—"}</td>
+
                   <td>
                     <div className="row-actions">
+
+                      <Link
+                        href={`/admin/steps/${step.id}`}
+                        className="btn"
+                      >
+                        Edit
+                      </Link>
+
                       <form
                         action={async () => {
                           "use server";
@@ -150,6 +185,7 @@ export default async function AdminStepsPage() {
                           ↓
                         </button>
                       </form>
+
                     </div>
                   </td>
                 </tr>
@@ -157,6 +193,7 @@ export default async function AdminStepsPage() {
             </tbody>
           </table>
         </div>
+
       </section>
     </AdminShell>
   );

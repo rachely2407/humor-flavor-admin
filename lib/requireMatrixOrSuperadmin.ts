@@ -14,13 +14,14 @@ export async function requireMatrixOrSuperadmin() {
 
   const { data: profile, error } = await supabase
     .from("profiles")
-    .select("id, is_superadmin, is_matrix_admin")
+    .select("is_superadmin, is_matrix_admin")
     .eq("id", user.id)
     .single();
 
-  if (error || !profile || (!profile.is_superadmin && !profile.is_matrix_admin)) {
+  if (error || (!profile?.is_superadmin && !profile?.is_matrix_admin)) {
+    await supabase.auth.signOut();
     redirect("/login?error=forbidden");
   }
 
-  return { user, profile };
+  return user;
 }

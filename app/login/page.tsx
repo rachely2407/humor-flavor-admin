@@ -1,9 +1,27 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
 export default function LoginPage() {
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const error = params.get("error");
+
+    if (error === "forbidden") {
+      setErrorMessage(
+        "This account is not authorized. Only superadmins or matrix admins can access this tool."
+      );
+    }
+  }, []);
+
   async function handleGoogleLogin() {
+    setErrorMessage(null);
+
+    await supabase.auth.signOut();
+
     const redirectTo =
       typeof window !== "undefined"
         ? `${window.location.origin}/auth/callback`
@@ -13,11 +31,14 @@ export default function LoginPage() {
       provider: "google",
       options: {
         redirectTo,
+        queryParams: {
+          prompt: "select_account",
+        },
       },
     });
 
     if (error) {
-      alert(error.message);
+      setErrorMessage(error.message);
     }
   }
 
@@ -38,9 +59,25 @@ export default function LoginPage() {
         <h1 style={{ marginTop: 0, marginBottom: 12 }}>Humor Flavor Admin</h1>
 
         <p style={{ opacity: 0.8, lineHeight: 1.6 }}>
-          Sign in with Google. Access should only work for users whose profile has{" "}
+          Sign in with Google. Access is restricted to accounts whose profile has{" "}
           <code>is_superadmin</code> or <code>is_matrix_admin</code>.
         </p>
+
+        {errorMessage && (
+          <div
+            style={{
+              marginTop: 16,
+              padding: 12,
+              borderRadius: 10,
+              background: "rgba(239,68,68,0.12)",
+              color: "#dc2626",
+              fontSize: 14,
+              lineHeight: 1.5,
+            }}
+          >
+            {errorMessage}
+          </div>
+        )}
 
         <button
           className="btn btn-primary"
