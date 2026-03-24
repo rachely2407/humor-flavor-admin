@@ -25,7 +25,7 @@ export function AdminShell({
       style={{
         minHeight: "100vh",
         background:
-          "linear-gradient(180deg, #edf3ff 0%, #dfe9fb 100%)",
+          "linear-gradient(140deg, transparent 0 70%, rgba(15,98,254,0.16) 70% 83%, transparent 83%), linear-gradient(180deg, #f5f0e6 0%, #efe3c7 100%)",
         padding: "28px 0",
       }}
     >
@@ -48,11 +48,10 @@ export function AdminShell({
               position: "sticky",
               top: 24,
               padding: 22,
-              borderRadius: 28,
-              background: "rgba(255,255,255,0.82)",
-              backdropFilter: "blur(12px)",
-              border: "1px solid rgba(255,255,255,0.65)",
-              boxShadow: "0 18px 50px rgba(73, 98, 146, 0.16)",
+              borderRadius: 8,
+              background: "rgba(250,246,238,0.98)",
+              border: "3px solid #111111",
+              boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
             }}
           >
             <div style={{ marginBottom: 22 }}>
@@ -61,12 +60,14 @@ export function AdminShell({
                   display: "inline-flex",
                   alignItems: "center",
                   padding: "7px 12px",
-                  borderRadius: 999,
-                  background: "rgba(91,109,246,0.10)",
-                  border: "1px solid rgba(91,109,246,0.14)",
-                  color: "#4353c7",
+                  borderRadius: 0,
+                  background: "#f4c300",
+                  border: "2px solid #111111",
+                  color: "#111111",
                   fontSize: 12,
-                  fontWeight: 700,
+                  fontWeight: 900,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
                 }}
               >
                 Admin Panel
@@ -77,7 +78,8 @@ export function AdminShell({
                   margin: "14px 0 8px 0",
                   fontSize: 28,
                   lineHeight: 1.1,
-                  color: "#172033",
+                  color: "#111111",
+                  textTransform: "uppercase",
                 }}
               >
                 Humor Project
@@ -86,7 +88,7 @@ export function AdminShell({
               <p
                 style={{
                   margin: 0,
-                  color: "#63708a",
+                  color: "#545454",
                   lineHeight: 1.6,
                   fontSize: 15,
                 }}
@@ -112,19 +114,17 @@ export function AdminShell({
                     style={{
                       display: "block",
                       padding: "14px 16px",
-                      borderRadius: 16,
-                      fontWeight: 700,
+                      borderRadius: 0,
+                      fontWeight: 900,
                       fontSize: 15,
                       textDecoration: "none",
-                      color: active ? "#ffffff" : "#32405e",
-                      background: active
-                        ? "linear-gradient(135deg, #5b6df6, #7c5cff)"
-                        : "rgba(255,255,255,0.72)",
-                      border: active
-                        ? "1px solid transparent"
-                        : "1px solid rgba(80,98,140,0.14)",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
+                      color: active ? "#fff8ea" : "#111111",
+                      background: active ? "#d92d20" : "#fff9ee",
+                      border: "3px solid #111111",
                       boxShadow: active
-                        ? "0 14px 30px rgba(91,109,246,0.22)"
+                        ? "6px 6px 0 rgba(17,17,17,0.96)"
                         : "none",
                     }}
                   >
@@ -140,11 +140,11 @@ export function AdminShell({
               style={{
                 marginBottom: 22,
                 padding: 28,
-                borderRadius: 28,
+                borderRadius: 8,
                 background:
-                  "linear-gradient(135deg, rgba(255,255,255,0.93), rgba(245,248,255,0.88))",
-                border: "1px solid rgba(255,255,255,0.7)",
-                boxShadow: "0 18px 50px rgba(73, 98, 146, 0.14)",
+                  "linear-gradient(135deg, transparent 0 84%, rgba(15,98,254,0.22) 84% 100%), linear-gradient(180deg, rgba(255,251,243,0.98), rgba(246,237,213,0.96))",
+                border: "3px solid #111111",
+                boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
               }}
             >
               <div
@@ -152,12 +152,14 @@ export function AdminShell({
                   display: "inline-flex",
                   alignItems: "center",
                   padding: "7px 12px",
-                  borderRadius: 999,
-                  background: "rgba(91,109,246,0.10)",
-                  border: "1px solid rgba(91,109,246,0.14)",
-                  color: "#4353c7",
+                  borderRadius: 0,
+                  background: "#0f62fe",
+                  border: "2px solid #111111",
+                  color: "#fff8ea",
                   fontSize: 12,
-                  fontWeight: 700,
+                  fontWeight: 900,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
                   marginBottom: 12,
                 }}
               >
@@ -169,7 +171,8 @@ export function AdminShell({
                   margin: 0,
                   fontSize: "clamp(30px, 4vw, 44px)",
                   lineHeight: 1.05,
-                  color: "#172033",
+                  color: "#111111",
+                  textTransform: "uppercase",
                 }}
               >
                 {title}
@@ -180,7 +183,7 @@ export function AdminShell({
                   style={{
                     marginTop: 12,
                     marginBottom: 0,
-                    color: "#63708a",
+                    color: "#545454",
                     lineHeight: 1.7,
                     maxWidth: 900,
                     fontSize: 16,

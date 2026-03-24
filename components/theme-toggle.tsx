@@ -18,17 +18,17 @@ export function ThemeToggle() {
   function pill(isActive: boolean) {
     return {
       padding: "8px 14px",
-      borderRadius: 999,
-      border: "1px solid var(--border)",
+      borderRadius: 0,
+      border: "2px solid #111111",
       cursor: "pointer",
-      fontWeight: 600,
+      fontWeight: 900,
       fontSize: 13,
-      background: isActive
-        ? "linear-gradient(135deg, var(--primary), #f472b6)"
-        : "rgba(255,255,255,0.55)",
-      color: isActive ? "white" : "var(--foreground)",
-      boxShadow: "var(--shadow-soft)",
+      background: isActive ? "#d92d20" : "#fff8ea",
+      color: isActive ? "#fff8ea" : "#111111",
+      boxShadow: "4px 4px 0 rgba(17,17,17,0.9)",
       transition: "0.2s",
+      textTransform: "uppercase",
+      letterSpacing: "0.06em",
     } as React.CSSProperties;
   }
 

@@ -152,19 +152,22 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
-            borderRadius: 999,
+            borderRadius: 0,
             padding: "7px 12px",
             fontSize: 12,
-            fontWeight: 700,
-            border: "1px solid var(--border)",
-            background: "var(--accent)",
+            fontWeight: 900,
+            border: "2px solid #111111",
+            background: "#f4c300",
+            color: "#111111",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
             marginBottom: 14,
           }}
         >
-          🪄 API Test Runner
+          API Test Runner
         </div>
 
-        <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: "1.6rem" }}>
+        <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: "1.6rem", textTransform: "uppercase" }}>
           Test a Humor Flavor
         </h2>
 
@@ -194,9 +197,9 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
             style={{
               marginTop: 14,
               padding: 14,
-              borderRadius: 18,
-              border: "1px solid var(--border)",
-              background: "rgba(255,255,255,0.35)",
+              borderRadius: 0,
+              border: "2px solid #111111",
+              background: "#fffdf7",
             }}
           >
             <div style={{ fontWeight: 700, marginBottom: 6 }}>
@@ -232,9 +235,9 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
               className="btn"
               onClick={() => fileInputRef.current?.click()}
               style={{
-                borderRadius: 999,
+                borderRadius: 0,
                 padding: "10px 16px",
-                fontWeight: 700,
+                fontWeight: 900,
               }}
             >
               Choose file
@@ -246,12 +249,12 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
                 className="btn"
                 onClick={handleRemoveImage}
                 style={{
-                  borderRadius: 999,
+                  borderRadius: 0,
                   padding: "10px 16px",
-                  fontWeight: 700,
-                  background: "linear-gradient(135deg, #ef4444, #f87171)",
-                  color: "white",
-                  border: "none",
+                  fontWeight: 900,
+                  background: "#111111",
+                  color: "#fff8ea",
+                  border: "3px solid #111111",
                 }}
               >
                 Remove image
@@ -261,9 +264,9 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
             <div
               style={{
                 padding: "10px 14px",
-                borderRadius: 999,
-                border: "1px solid var(--border)",
-                background: "rgba(255,255,255,0.45)",
+                borderRadius: 0,
+                border: "2px solid #111111",
+                background: "#fffdf7",
                 minHeight: 42,
                 display: "inline-flex",
                 alignItems: "center",
@@ -285,8 +288,8 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
                 width: "100%",
                 maxHeight: 320,
                 objectFit: "cover",
-                borderRadius: 24,
-                border: "1px solid var(--border)",
+                borderRadius: 8,
+                border: "3px solid #111111",
                 boxShadow: "var(--shadow-soft)",
               }}
             />
@@ -306,19 +309,22 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
             display: "inline-flex",
             alignItems: "center",
             gap: 8,
-            borderRadius: 999,
+            borderRadius: 0,
             padding: "7px 12px",
             fontSize: 12,
-            fontWeight: 700,
-            border: "1px solid var(--border)",
-            background: "var(--accent)",
+            fontWeight: 900,
+            border: "2px solid #111111",
+            background: "#0f62fe",
+            color: "#fff8ea",
+            textTransform: "uppercase",
+            letterSpacing: "0.08em",
             marginBottom: 14,
           }}
         >
-          ✨ Results
+          Results
         </div>
 
-        <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: "1.6rem" }}>
+        <h2 style={{ marginTop: 0, marginBottom: 8, fontSize: "1.6rem", textTransform: "uppercase" }}>
           Generated Captions
         </h2>
 
@@ -332,9 +338,10 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
             style={{
               marginTop: 20,
               minHeight: 220,
-              borderRadius: 24,
-              border: "1px solid rgba(239,68,68,0.35)",
-              background: "rgba(239,68,68,0.08)",
+              borderRadius: 8,
+              border: "3px solid #111111",
+              background: "#d92d20",
+              color: "#fff8ea",
               padding: 20,
             }}
           >
@@ -358,16 +365,16 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
               minHeight: 360,
               display: "grid",
               placeItems: "center",
-              borderRadius: 24,
-              border: "1px dashed var(--border)",
-              background: "rgba(255,255,255,0.25)",
+              borderRadius: 8,
+              border: "3px dashed #111111",
+              background: "#fffdf7",
               textAlign: "center",
               padding: 24,
             }}
           >
             <div>
-              <div style={{ fontSize: 42, marginBottom: 10 }}>💭</div>
-              <div style={{ fontWeight: 700, marginBottom: 6 }}>No output yet</div>
+              <div style={{ fontSize: 42, marginBottom: 10 }}>□</div>
+              <div style={{ fontWeight: 900, marginBottom: 6, textTransform: "uppercase" }}>No output yet</div>
               <div style={{ opacity: 0.75 }}>
                 Run a test and the generated caption cards will appear here.
               </div>
@@ -379,9 +386,9 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
               <article
                 key={item.id ?? index}
                 style={{
-                  borderRadius: 24,
-                  border: "1px solid var(--border)",
-                  background: "rgba(255,255,255,0.35)",
+                  borderRadius: 8,
+                  border: "3px solid #111111",
+                  background: "#fffaf0",
                   padding: 18,
                   boxShadow: "var(--shadow-soft)",
                 }}
@@ -394,9 +401,9 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
                       width: "100%",
                       maxHeight: 260,
                       objectFit: "cover",
-                      borderRadius: 18,
+                      borderRadius: 8,
                       marginBottom: 14,
-                      border: "1px solid var(--border)",
+                      border: "3px solid #111111",
                     }}
                   />
                 )}
@@ -415,12 +422,14 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: 8,
-                      borderRadius: 999,
+                      borderRadius: 0,
                       padding: "6px 10px",
                       fontSize: 12,
-                      fontWeight: 700,
-                      border: "1px solid var(--border)",
-                      background: "var(--accent)",
+                      fontWeight: 900,
+                      border: "2px solid #111111",
+                      background: "#f4c300",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.06em",
                     }}
                   >
                     Caption {index + 1}
@@ -454,10 +463,10 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
                 >
                   <div
                     style={{
-                      borderRadius: 18,
+                      borderRadius: 0,
                       padding: "10px 12px",
-                      border: "1px solid var(--border)",
-                      background: "rgba(255,255,255,0.28)",
+                      border: "2px solid #111111",
+                      background: "#fffdf7",
                     }}
                   >
                     <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 4 }}>
@@ -468,10 +477,10 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
 
                   <div
                     style={{
-                      borderRadius: 18,
+                      borderRadius: 0,
                       padding: "10px 12px",
-                      border: "1px solid var(--border)",
-                      background: "rgba(255,255,255,0.28)",
+                      border: "2px solid #111111",
+                      background: "#fffdf7",
                     }}
                   >
                     <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 4 }}>
@@ -482,10 +491,10 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
 
                   <div
                     style={{
-                      borderRadius: 18,
+                      borderRadius: 0,
                       padding: "10px 12px",
-                      border: "1px solid var(--border)",
-                      background: "rgba(255,255,255,0.28)",
+                      border: "2px solid #111111",
+                      background: "#fffdf7",
                     }}
                   >
                     <div style={{ fontSize: 12, opacity: 0.7, marginBottom: 4 }}>

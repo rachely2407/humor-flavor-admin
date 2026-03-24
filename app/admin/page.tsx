@@ -71,10 +71,17 @@ export default async function AdminDashboardPage() {
             key={card.title}
             style={{
               padding: 24,
-              borderRadius: 28,
-              background: "rgba(255,255,255,0.90)",
-              border: "1px solid rgba(255,255,255,0.72)",
-              boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+              borderRadius: 8,
+              background:
+                card.title === "Humor Flavors"
+                  ? "#fff8ea"
+                  : card.title === "Flavor Steps"
+                  ? "#f4c300"
+                  : card.title === "Images"
+                  ? "#0f62fe"
+                  : "#d92d20",
+              border: "3px solid #111111",
+              boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
             }}
           >
             <div
@@ -82,12 +89,14 @@ export default async function AdminDashboardPage() {
                 display: "inline-flex",
                 alignItems: "center",
                 padding: "7px 12px",
-                borderRadius: 999,
-                background: "rgba(91,109,246,0.09)",
-                border: "1px solid rgba(91,109,246,0.12)",
-                color: "#4353c7",
+                borderRadius: 0,
+                background: "rgba(255,248,234,0.92)",
+                border: "2px solid #111111",
+                color: "#111111",
                 fontSize: 12,
-                fontWeight: 700,
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
                 marginBottom: 12,
               }}
             >
@@ -98,7 +107,11 @@ export default async function AdminDashboardPage() {
               style={{
                 margin: "0 0 8px 0",
                 fontSize: 18,
-                color: "#172033",
+                color:
+                  card.title === "Images" || card.title === "Testing"
+                    ? "#fff8ea"
+                    : "#111111",
+                textTransform: "uppercase",
               }}
             >
               {card.title}
@@ -109,7 +122,10 @@ export default async function AdminDashboardPage() {
                 fontSize: 38,
                 fontWeight: 800,
                 lineHeight: 1,
-                color: "#172033",
+                color:
+                  card.title === "Images" || card.title === "Testing"
+                    ? "#fff8ea"
+                    : "#111111",
                 marginBottom: 10,
               }}
             >
@@ -119,7 +135,10 @@ export default async function AdminDashboardPage() {
             <p
               style={{
                 margin: "0 0 18px 0",
-                color: "#63708a",
+                color:
+                  card.title === "Images" || card.title === "Testing"
+                    ? "rgba(255,248,234,0.86)"
+                    : "#323232",
                 lineHeight: 1.6,
                 minHeight: 72,
               }}
@@ -135,12 +154,15 @@ export default async function AdminDashboardPage() {
                 justifyContent: "center",
                 minHeight: 44,
                 padding: "0 18px",
-                borderRadius: 999,
+                borderRadius: 0,
                 textDecoration: "none",
-                color: "#fff",
-                fontWeight: 700,
-                background: "linear-gradient(135deg, #5b6df6, #7c5cff)",
-                boxShadow: "0 14px 30px rgba(91,109,246,0.18)",
+                color: "#111111",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                background: "#fff8ea",
+                border: "3px solid #111111",
+                boxShadow: "6px 6px 0 rgba(17,17,17,0.96)",
               }}
             >
               {card.button}
@@ -159,17 +181,18 @@ export default async function AdminDashboardPage() {
         <div
           style={{
             padding: 28,
-            borderRadius: 28,
-            background: "rgba(255,255,255,0.90)",
-            border: "1px solid rgba(255,255,255,0.72)",
-            boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+            borderRadius: 8,
+            background: "#fff8ea",
+            border: "3px solid #111111",
+            boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
           }}
         >
           <h2
             style={{
               margin: "0 0 12px 0",
               fontSize: 24,
-              color: "#172033",
+              color: "#111111",
+              textTransform: "uppercase",
             }}
           >
             Admin system status
@@ -192,11 +215,11 @@ export default async function AdminDashboardPage() {
                 key={item}
                 style={{
                   padding: "14px 16px",
-                  borderRadius: 18,
-                  background: "rgba(244,247,255,0.95)",
-                  border: "1px solid rgba(80,98,140,0.12)",
-                  color: "#32405e",
-                  fontWeight: 600,
+                  borderRadius: 0,
+                  background: item.includes("CRUD") ? "#0f62fe" : "#fffdf7",
+                  border: "2px solid #111111",
+                  color: item.includes("CRUD") ? "#fff8ea" : "#111111",
+                  fontWeight: 800,
                   lineHeight: 1.5,
                 }}
               >
@@ -209,17 +232,18 @@ export default async function AdminDashboardPage() {
         <div
           style={{
             padding: 28,
-            borderRadius: 28,
-            background: "rgba(255,255,255,0.90)",
-            border: "1px solid rgba(255,255,255,0.72)",
-            boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+            borderRadius: 8,
+            background: "#111111",
+            border: "3px solid #111111",
+            boxShadow: "10px 10px 0 rgba(217,45,32,0.92)",
           }}
         >
           <h2
             style={{
               margin: "0 0 14px 0",
               fontSize: 24,
-              color: "#172033",
+              color: "#fff8ea",
+              textTransform: "uppercase",
             }}
           >
             Quick snapshot
@@ -229,15 +253,15 @@ export default async function AdminDashboardPage() {
             <div
               style={{
                 padding: 18,
-                borderRadius: 20,
-                background: "rgba(244,247,255,0.95)",
-                border: "1px solid rgba(80,98,140,0.12)",
+                borderRadius: 0,
+                background: "#f4c300",
+                border: "2px solid #111111",
               }}
             >
-              <div style={{ color: "#63708a", fontSize: 13, fontWeight: 700, marginBottom: 6 }}>
+              <div style={{ color: "#111111", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Total images
               </div>
-              <div style={{ fontSize: 28, fontWeight: 800, color: "#172033" }}>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "#111111" }}>
                 {imageCount ?? 0}
               </div>
             </div>
@@ -245,15 +269,15 @@ export default async function AdminDashboardPage() {
             <div
               style={{
                 padding: 18,
-                borderRadius: 20,
-                background: "rgba(244,247,255,0.95)",
-                border: "1px solid rgba(80,98,140,0.12)",
+                borderRadius: 0,
+                background: "#fff8ea",
+                border: "2px solid #111111",
               }}
             >
-              <div style={{ color: "#63708a", fontSize: 13, fontWeight: 700, marginBottom: 6 }}>
+              <div style={{ color: "#111111", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Public images
               </div>
-              <div style={{ fontSize: 28, fontWeight: 800, color: "#172033" }}>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "#111111" }}>
                 {publicImageCount ?? 0}
               </div>
             </div>
@@ -261,15 +285,15 @@ export default async function AdminDashboardPage() {
             <div
               style={{
                 padding: 18,
-                borderRadius: 20,
-                background: "rgba(244,247,255,0.95)",
-                border: "1px solid rgba(80,98,140,0.12)",
+                borderRadius: 0,
+                background: "#0f62fe",
+                border: "2px solid #111111",
               }}
             >
-              <div style={{ color: "#63708a", fontSize: 13, fontWeight: 700, marginBottom: 6 }}>
+              <div style={{ color: "#fff8ea", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Total captions
               </div>
-              <div style={{ fontSize: 28, fontWeight: 800, color: "#172033" }}>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "#fff8ea" }}>
                 {captionCount ?? 0}
               </div>
             </div>

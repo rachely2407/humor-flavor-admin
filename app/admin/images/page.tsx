@@ -122,10 +122,10 @@ function AdminImagesPageInner() {
       <section
         style={{
           padding: 28,
-          borderRadius: 28,
-          background: "rgba(255,255,255,0.88)",
-          border: "1px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          borderRadius: 8,
+          background: "#fff8ea",
+          border: "3px solid #111111",
+          boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
         }}
       >
         <div style={{ marginBottom: 18 }}>
@@ -134,7 +134,8 @@ function AdminImagesPageInner() {
               margin: "0 0 8px 0",
               fontSize: 24,
               lineHeight: 1.15,
-              color: "#172033",
+              color: "#111111",
+              textTransform: "uppercase",
             }}
           >
             Create image
@@ -142,7 +143,7 @@ function AdminImagesPageInner() {
           <p
             style={{
               margin: 0,
-              color: "#63708a",
+              color: "#545454",
               lineHeight: 1.6,
               fontSize: 15,
             }}
@@ -158,8 +159,10 @@ function AdminImagesPageInner() {
                 display: "block",
                 marginBottom: 8,
                 fontSize: 14,
-                fontWeight: 700,
-                color: "#2e3a56",
+                fontWeight: 900,
+                color: "#111111",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
               }}
             >
               Image file
@@ -173,7 +176,7 @@ function AdminImagesPageInner() {
             <p
               style={{
                 margin: "8px 0 0 0",
-                color: "#63708a",
+                color: "#545454",
                 lineHeight: 1.6,
                 fontSize: 13,
               }}
@@ -190,8 +193,10 @@ function AdminImagesPageInner() {
                 display: "block",
                 marginBottom: 8,
                 fontSize: 14,
-                fontWeight: 700,
-                color: "#2e3a56",
+                fontWeight: 900,
+                color: "#111111",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
               }}
             >
               Image URL
@@ -203,10 +208,10 @@ function AdminImagesPageInner() {
               required={!selectedFile}
               style={{
                 width: "100%",
-                border: "1px solid rgba(80,98,140,0.16)",
-                background: "rgba(255,255,255,0.95)",
-                color: "#172033",
-                borderRadius: 16,
+                border: "3px solid #111111",
+                background: "#fffdf7",
+                color: "#111111",
+                borderRadius: 0,
                 padding: "14px 16px",
                 outline: "none",
               }}
@@ -219,8 +224,10 @@ function AdminImagesPageInner() {
                 display: "block",
                 marginBottom: 8,
                 fontSize: 14,
-                fontWeight: 700,
-                color: "#2e3a56",
+                fontWeight: 900,
+                color: "#111111",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
               }}
             >
               Image description
@@ -233,10 +240,10 @@ function AdminImagesPageInner() {
                 width: "100%",
                 minHeight: 140,
                 resize: "vertical",
-                border: "1px solid rgba(80,98,140,0.16)",
-                background: "rgba(255,255,255,0.95)",
-                color: "#172033",
-                borderRadius: 16,
+                border: "3px solid #111111",
+                background: "#fffdf7",
+                color: "#111111",
+                borderRadius: 0,
                 padding: "14px 16px",
                 outline: "none",
               }}
@@ -249,8 +256,8 @@ function AdminImagesPageInner() {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: 10,
-                color: "#32405e",
-                fontWeight: 600,
+                color: "#111111",
+                fontWeight: 800,
                 fontSize: 15,
               }}
             >
@@ -276,13 +283,15 @@ function AdminImagesPageInner() {
               style={{
                 minHeight: 46,
                 padding: "0 18px",
-                borderRadius: 999,
-                border: "none",
-                color: "#fff",
-                fontWeight: 700,
+                borderRadius: 0,
+                border: "3px solid #111111",
+                color: "#fff8ea",
+                fontWeight: 900,
                 cursor: "pointer",
-                background: "linear-gradient(135deg, #5b6df6, #7c5cff)",
-                boxShadow: "0 14px 30px rgba(91,109,246,0.22)",
+                background: "#d92d20",
+                boxShadow: "6px 6px 0 rgba(17,17,17,0.96)",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
               }}
             >
               {creating ? "Creating..." : "Create image"}
@@ -295,12 +304,14 @@ function AdminImagesPageInner() {
               style={{
                 minHeight: 46,
                 padding: "0 18px",
-                borderRadius: 999,
-                border: "1px solid rgba(80,98,140,0.14)",
-                background: "rgba(255,255,255,0.78)",
-                color: "#24314d",
-                fontWeight: 700,
+                borderRadius: 0,
+                border: "3px solid #111111",
+                background: "#0f62fe",
+                color: "#fff8ea",
+                fontWeight: 900,
                 cursor: "pointer",
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
               }}
             >
               {loadingTable
@@ -316,10 +327,10 @@ function AdminImagesPageInner() {
       <section
         style={{
           padding: 28,
-          borderRadius: 28,
-          background: "rgba(255,255,255,0.88)",
-          border: "1px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          borderRadius: 8,
+          background: "#fffdf7",
+          border: "3px solid #111111",
+          boxShadow: "10px 10px 0 rgba(15,98,254,0.88)",
         }}
       >
         <div style={{ marginBottom: 18 }}>
@@ -328,7 +339,8 @@ function AdminImagesPageInner() {
               margin: "0 0 8px 0",
               fontSize: 24,
               lineHeight: 1.15,
-              color: "#172033",
+              color: "#111111",
+              textTransform: "uppercase",
             }}
           >
             Recent images
@@ -336,7 +348,7 @@ function AdminImagesPageInner() {
           <p
             style={{
               margin: 0,
-              color: "#63708a",
+              color: "#545454",
               lineHeight: 1.6,
               fontSize: 15,
             }}
@@ -349,10 +361,10 @@ function AdminImagesPageInner() {
           <div
             style={{
               padding: 30,
-              borderRadius: 22,
-              border: "1px dashed rgba(80,98,140,0.28)",
-              background: "rgba(255,255,255,0.45)",
-              color: "#63708a",
+              borderRadius: 8,
+              border: "3px dashed #111111",
+              background: "#fff8ea",
+              color: "#545454",
               textAlign: "center",
             }}
           >
@@ -373,10 +385,10 @@ function AdminImagesPageInner() {
                 key={image.id}
                 style={{
                   overflow: "hidden",
-                  borderRadius: 24,
-                  background: "rgba(255,255,255,0.94)",
-                  border: "1px solid rgba(80,98,140,0.14)",
-                  boxShadow: "0 10px 24px rgba(64, 89, 145, 0.08)",
+                  borderRadius: 8,
+                  background: "#fffaf0",
+                  border: "3px solid #111111",
+                  boxShadow: "6px 6px 0 rgba(17,17,17,0.24)",
                 }}
               >
                 <div style={{ padding: "14px 14px 0" }}>
@@ -389,8 +401,8 @@ function AdminImagesPageInner() {
                         width: "100%",
                         aspectRatio: "1 / 1",
                         objectFit: "cover",
-                        borderRadius: 18,
-                        background: "rgba(223,231,255,0.8)",
+                        borderRadius: 8,
+                        background: "rgba(15,98,254,0.12)",
                       }}
                     />
                   ) : (
@@ -400,9 +412,9 @@ function AdminImagesPageInner() {
                         aspectRatio: "1 / 1",
                         display: "grid",
                         placeItems: "center",
-                        borderRadius: 18,
-                        background: "rgba(223,231,255,0.8)",
-                        color: "#63708a",
+                        borderRadius: 8,
+                        background: "rgba(15,98,254,0.12)",
+                        color: "#545454",
                       }}
                     >
                       No image
@@ -417,12 +429,14 @@ function AdminImagesPageInner() {
                         display: "inline-flex",
                         alignItems: "center",
                         padding: "7px 12px",
-                        borderRadius: 999,
-                        background: "rgba(91,109,246,0.09)",
-                        border: "1px solid rgba(91,109,246,0.12)",
-                        color: "#4353c7",
+                        borderRadius: 0,
+                        background: image.is_public ? "#f4c300" : "#111111",
+                        border: "2px solid #111111",
+                        color: image.is_public ? "#111111" : "#fff8ea",
                         fontSize: 12,
-                        fontWeight: 700,
+                        fontWeight: 900,
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
                       }}
                     >
                       {image.is_public ? "Public" : "Private"}
@@ -434,7 +448,8 @@ function AdminImagesPageInner() {
                       margin: "0 0 8px 0",
                       fontSize: 18,
                       lineHeight: 1.25,
-                      color: "#172033",
+                      color: "#111111",
+                      textTransform: "uppercase",
                     }}
                   >
                     {image.image_description?.trim() || "Untitled image"}
@@ -443,7 +458,7 @@ function AdminImagesPageInner() {
                   <p
                     style={{
                       margin: "0 0 8px 0",
-                      color: "#55627d",
+                      color: "#545454",
                       fontSize: 12,
                       lineHeight: 1.5,
                       overflowWrap: "anywhere",
@@ -455,7 +470,7 @@ function AdminImagesPageInner() {
                   <p
                     style={{
                       margin: "0 0 14px 0",
-                      color: "#63708a",
+                      color: "#545454",
                       fontSize: 13,
                       lineHeight: 1.6,
                       overflowWrap: "anywhere",
@@ -473,13 +488,15 @@ function AdminImagesPageInner() {
                         justifyContent: "center",
                         minHeight: 42,
                         padding: "0 16px",
-                        borderRadius: 999,
+                        borderRadius: 0,
                         textDecoration: "none",
-                        border: "none",
-                        color: "#fff",
-                        fontWeight: 700,
-                        background: "linear-gradient(135deg, #5b6df6, #7c5cff)",
-                        boxShadow: "0 14px 30px rgba(91,109,246,0.18)",
+                        border: "3px solid #111111",
+                        color: "#fff8ea",
+                        fontWeight: 900,
+                        background: "#0f62fe",
+                        boxShadow: "6px 6px 0 rgba(17,17,17,0.96)",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.06em",
                       }}
                     >
                       Edit

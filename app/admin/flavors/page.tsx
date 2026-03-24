@@ -47,10 +47,10 @@ export default async function AdminFlavorsPage() {
       <section
         style={{
           padding: 28,
-          borderRadius: 28,
-          background: "rgba(255,255,255,0.90)",
-          border: "1px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          borderRadius: 8,
+          background: "#fff8ea",
+          border: "3px solid #111111",
+          boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
         }}
       >
         <div
@@ -68,7 +68,8 @@ export default async function AdminFlavorsPage() {
               style={{
                 margin: "0 0 8px 0",
                 fontSize: 24,
-                color: "#172033",
+                color: "#111111",
+                textTransform: "uppercase",
               }}
             >
               Flavor records
@@ -76,7 +77,7 @@ export default async function AdminFlavorsPage() {
             <p
               style={{
                 margin: 0,
-                color: "#63708a",
+                color: "#545454",
                 lineHeight: 1.6,
               }}
             >
@@ -92,12 +93,15 @@ export default async function AdminFlavorsPage() {
               justifyContent: "center",
               minHeight: 44,
               padding: "0 18px",
-              borderRadius: 999,
+              borderRadius: 0,
               textDecoration: "none",
-              color: "#fff",
-              fontWeight: 700,
-              background: "linear-gradient(135deg, #5b6df6, #7c5cff)",
-              boxShadow: "0 14px 30px rgba(91,109,246,0.18)",
+              color: "#fff8ea",
+              fontWeight: 900,
+              background: "#d92d20",
+              border: "3px solid #111111",
+              boxShadow: "6px 6px 0 rgba(17,17,17,0.96)",
+              textTransform: "uppercase",
+              letterSpacing: "0.06em",
             }}
           >
             + New flavor
@@ -108,10 +112,10 @@ export default async function AdminFlavorsPage() {
           <div
             style={{
               padding: 28,
-              borderRadius: 22,
-              border: "1px dashed rgba(80,98,140,0.28)",
-              background: "rgba(255,255,255,0.45)",
-              color: "#63708a",
+              borderRadius: 8,
+              border: "3px dashed #111111",
+              background: "#fffdf7",
+              color: "#545454",
             }}
           >
             No flavor rows were returned from <code>humor_flavors</code>.
@@ -120,9 +124,9 @@ export default async function AdminFlavorsPage() {
           <div
             style={{
               overflowX: "auto",
-              borderRadius: 22,
-              border: "1px solid rgba(80,98,140,0.14)",
-              background: "rgba(255,255,255,0.76)",
+              borderRadius: 8,
+              border: "3px solid #111111",
+              background: "#fffaf0",
             }}
           >
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -167,19 +171,21 @@ export default async function AdminFlavorsPage() {
 const thStyle: React.CSSProperties = {
   padding: "14px 16px",
   textAlign: "left",
-  borderBottom: "1px solid rgba(80,98,140,0.14)",
+  borderBottom: "2px solid #111111",
   fontSize: 13,
-  color: "#63708a",
-  fontWeight: 700,
-  background: "rgba(243,247,255,0.95)",
+  color: "#111111",
+  fontWeight: 900,
+  background: "#f4c300",
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
 };
 
 const tdStyle: React.CSSProperties = {
   padding: "14px 16px",
   textAlign: "left",
-  borderBottom: "1px solid rgba(80,98,140,0.14)",
+  borderBottom: "2px solid #111111",
   verticalAlign: "top",
-  color: "#172033",
+  color: "#111111",
 };
 
 const openBtnStyle: React.CSSProperties = {
@@ -188,10 +194,12 @@ const openBtnStyle: React.CSSProperties = {
   justifyContent: "center",
   minHeight: 38,
   padding: "0 14px",
-  borderRadius: 999,
+  borderRadius: 0,
   textDecoration: "none",
-  border: "1px solid rgba(80,98,140,0.14)",
-  color: "#24314d",
-  fontWeight: 700,
-  background: "rgba(255,255,255,0.78)",
+  border: "2px solid #111111",
+  color: "#111111",
+  fontWeight: 900,
+  background: "#fffdf7",
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
 };

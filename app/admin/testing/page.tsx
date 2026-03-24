@@ -55,10 +55,10 @@ export default async function CaptionTestingPage() {
       <section
         style={{
           padding: 28,
-          borderRadius: 28,
-          background: "rgba(255,255,255,0.90)",
-          border: "1px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          borderRadius: 8,
+          background: "#fff8ea",
+          border: "3px solid #111111",
+          boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
         }}
       >
         <div
@@ -74,21 +74,22 @@ export default async function CaptionTestingPage() {
           <div>
             <h2
               style={{
-                margin: "0 0 8px 0",
-                fontSize: 24,
-                lineHeight: 1.15,
-                color: "#172033",
-              }}
-            >
+              margin: "0 0 8px 0",
+              fontSize: 24,
+              lineHeight: 1.15,
+              color: "#111111",
+              textTransform: "uppercase",
+            }}
+          >
               Testing workspace
             </h2>
             <p
               style={{
-                margin: 0,
-                color: "#63708a",
-                lineHeight: 1.6,
-                fontSize: 15,
-              }}
+              margin: 0,
+              color: "#545454",
+              lineHeight: 1.6,
+              fontSize: 15,
+            }}
             >
               Flavor options loaded: {flavors.length}
             </p>
@@ -99,12 +100,14 @@ export default async function CaptionTestingPage() {
               display: "inline-flex",
               alignItems: "center",
               padding: "7px 12px",
-              borderRadius: 999,
-              background: "rgba(91,109,246,0.09)",
-              border: "1px solid rgba(91,109,246,0.12)",
-              color: "#4353c7",
+              borderRadius: 0,
+              background: "#0f62fe",
+              border: "2px solid #111111",
+              color: "#fff8ea",
               fontSize: 12,
-              fontWeight: 700,
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
             }}
           >
             Live Testing

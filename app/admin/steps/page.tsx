@@ -138,18 +138,18 @@ export default async function AdminStepsPage() {
       <section
         style={{
           padding: 28,
-          borderRadius: 28,
-          background: "rgba(255,255,255,0.90)",
-          border: "1px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          borderRadius: 8,
+          background: "#fff8ea",
+          border: "3px solid #111111",
+          boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
           marginBottom: 22,
         }}
       >
         <div style={{ marginBottom: 18 }}>
-          <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#172033" }}>
+          <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#111111", textTransform: "uppercase" }}>
             Create step
           </h2>
-          <p style={{ margin: 0, color: "#63708a", lineHeight: 1.6 }}>
+          <p style={{ margin: 0, color: "#545454", lineHeight: 1.6 }}>
             Add a new humor flavor step using the protected admin API.
           </p>
         </div>
@@ -166,17 +166,17 @@ export default async function AdminStepsPage() {
       <section
         style={{
           padding: 28,
-          borderRadius: 28,
-          background: "rgba(255,255,255,0.90)",
-          border: "1px solid rgba(255,255,255,0.72)",
-          boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          borderRadius: 8,
+          background: "#fffdf7",
+          border: "3px solid #111111",
+          boxShadow: "10px 10px 0 rgba(15,98,254,0.88)",
         }}
       >
         <div style={{ marginBottom: 18 }}>
-          <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#172033" }}>
+          <h2 style={{ margin: "0 0 8px 0", fontSize: 24, color: "#111111", textTransform: "uppercase" }}>
             Step definitions
           </h2>
-          <p style={{ margin: 0, color: "#63708a", lineHeight: 1.6 }}>
+          <p style={{ margin: 0, color: "#545454", lineHeight: 1.6 }}>
             Total rows: {sortedRows.length}
           </p>
         </div>
@@ -185,10 +185,10 @@ export default async function AdminStepsPage() {
           <div
             style={{
               padding: 28,
-              borderRadius: 22,
-              border: "1px dashed rgba(80,98,140,0.28)",
-              background: "rgba(255,255,255,0.45)",
-              color: "#63708a",
+              borderRadius: 8,
+              border: "3px dashed #111111",
+              background: "#fff8ea",
+              color: "#545454",
             }}
           >
             No step rows were returned from <code>humor_flavor_steps</code>.
@@ -197,9 +197,9 @@ export default async function AdminStepsPage() {
           <div
             style={{
               overflowX: "auto",
-              borderRadius: 22,
-              border: "1px solid rgba(80,98,140,0.14)",
-              background: "rgba(255,255,255,0.76)",
+              borderRadius: 8,
+              border: "3px solid #111111",
+              background: "#fffaf0",
             }}
           >
             <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -263,19 +263,21 @@ export default async function AdminStepsPage() {
 const thStyle: React.CSSProperties = {
   padding: "14px 16px",
   textAlign: "left",
-  borderBottom: "1px solid rgba(80,98,140,0.14)",
+  borderBottom: "2px solid #111111",
   fontSize: 13,
-  color: "#63708a",
-  fontWeight: 700,
-  background: "rgba(243,247,255,0.95)",
+  color: "#111111",
+  fontWeight: 900,
+  background: "#f4c300",
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
 };
 
 const tdStyle: React.CSSProperties = {
   padding: "14px 16px",
   textAlign: "left",
-  borderBottom: "1px solid rgba(80,98,140,0.14)",
+  borderBottom: "2px solid #111111",
   verticalAlign: "top",
-  color: "#172033",
+  color: "#111111",
 };
 
 const openBtnStyle: React.CSSProperties = {
@@ -284,21 +286,23 @@ const openBtnStyle: React.CSSProperties = {
   justifyContent: "center",
   minHeight: 38,
   padding: "0 14px",
-  borderRadius: 999,
+  borderRadius: 0,
   textDecoration: "none",
-  border: "1px solid rgba(80,98,140,0.14)",
-  color: "#24314d",
-  fontWeight: 700,
-  background: "rgba(255,255,255,0.78)",
+  border: "2px solid #111111",
+  color: "#111111",
+  fontWeight: 900,
+  background: "#fffdf7",
+  textTransform: "uppercase",
+  letterSpacing: "0.06em",
 };
 
 const smallBtnStyle: React.CSSProperties = {
   minHeight: 34,
   minWidth: 34,
-  borderRadius: 999,
-  border: "1px solid rgba(80,98,140,0.14)",
-  background: "rgba(255,255,255,0.78)",
-  color: "#24314d",
-  fontWeight: 700,
+  borderRadius: 0,
+  border: "2px solid #111111",
+  background: "#0f62fe",
+  color: "#fff8ea",
+  fontWeight: 900,
   cursor: "pointer",
 };

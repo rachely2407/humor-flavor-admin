@@ -1,19 +1,24 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #eef4ff;
-  --bg-2: #dbe7ff;
-  --panel: rgba(255, 255, 255, 0.86);
-  --panel-strong: rgba(255, 255, 255, 0.95);
-  --text: #172033;
-  --muted: #63708a;
-  --line: rgba(80, 98, 140, 0.16);
-  --line-strong: rgba(80, 98, 140, 0.28);
-  --primary: #5b6df6;
-  --primary-2: #7c5cff;
-  --danger: #e34f6f;
-  --shadow: 0 20px 60px rgba(64, 89, 145, 0.18);
-  --radius: 24px;
+  --bg: #f5f0e6;
+  --bg-2: #efe3c7;
+  --panel: rgba(250, 246, 238, 0.97);
+  --panel-strong: rgba(255, 252, 247, 0.99);
+  --text: #111111;
+  --muted: #545454;
+  --line: #111111;
+  --line-strong: #111111;
+  --primary: #d92d20;
+  --primary-2: #0f62fe;
+  --accent-yellow: #f4c300;
+  --accent-blue: #0f62fe;
+  --accent-red: #d92d20;
+  --accent-black: #111111;
+  --danger: #d92d20;
+  --shadow: 10px 10px 0 rgba(17, 17, 17, 0.92);
+  --shadow-soft: 6px 6px 0 rgba(17, 17, 17, 0.24);
+  --radius: 8px;
 }
 
 * {
@@ -26,11 +31,14 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(124, 92, 255, 0.12), transparent 28%),
-    radial-gradient(circle at top right, rgba(91, 109, 246, 0.12), transparent 26%),
-    linear-gradient(180deg, #edf3ff 0%, #dde8fb 100%);
+    linear-gradient(145deg, transparent 0 64%, rgba(15, 98, 254, 0.18) 64% 76%, transparent 76%),
+    radial-gradient(circle at 12% 18%, rgba(217, 45, 32, 0.24) 0 7%, transparent 7.2%),
+    radial-gradient(circle at 82% 14%, rgba(244, 195, 0, 0.28) 0 9%, transparent 9.2%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
   font-family:
-    Inter,
+    "Avenir Next",
+    Futura,
+    "Trebuchet MS",
     ui-sans-serif,
     system-ui,
     -apple-system,
@@ -76,10 +84,9 @@ select {
   position: sticky;
   top: 24px;
   padding: 22px;
-  border-radius: 28px;
+  border-radius: var(--radius);
   background: var(--panel);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  border: 3px solid var(--line);
   box-shadow: var(--shadow);
 }
 
@@ -104,11 +111,13 @@ select {
 .nav-link {
   display: block;
   padding: 14px 16px;
-  border-radius: 16px;
-  color: #32405e;
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid transparent;
-  font-weight: 600;
+  border-radius: 0;
+  color: var(--text);
+  background: #fff9ee;
+  border: 3px solid var(--line);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   transition:
     transform 0.16s ease,
     background 0.16s ease,
@@ -117,16 +126,15 @@ select {
 }
 
 .nav-link:hover {
-  transform: translateY(-1px);
-  background: rgba(255, 255, 255, 0.92);
-  border-color: rgba(91, 109, 246, 0.22);
-  box-shadow: 0 10px 26px rgba(91, 109, 246, 0.12);
+  transform: translate(-2px, -2px);
+  background: var(--accent-yellow);
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.9);
 }
 
 .nav-link.active {
-  color: white;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  box-shadow: 0 14px 34px rgba(91, 109, 246, 0.28);
+  color: #fff8ea;
+  background: var(--accent-red);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.96);
 }
 
 .content-area {
@@ -136,13 +144,11 @@ select {
 .page-header {
   margin-bottom: 18px;
   padding: 28px 30px;
-  border-radius: 28px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.92),
-    rgba(245, 248, 255, 0.86)
-  );
-  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(135deg, transparent 0 82%, rgba(15, 98, 254, 0.2) 82% 100%),
+    linear-gradient(180deg, rgba(255, 251, 243, 0.98), rgba(246, 237, 213, 0.96));
+  border: 3px solid var(--line);
   box-shadow: var(--shadow);
 }
 
@@ -163,13 +169,14 @@ select {
   display: inline-flex;
   align-items: center;
   padding: 7px 12px;
-  border-radius: 999px;
-  background: rgba(91, 109, 246, 0.09);
-  border: 1px solid rgba(91, 109, 246, 0.12);
-  color: #4353c7;
+  border-radius: 0;
+  background: var(--accent-yellow);
+  border: 2px solid var(--line);
+  color: var(--text);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .admin-stack {
@@ -180,10 +187,9 @@ select {
 .hero-card,
 .pretty-panel,
 .card {
-  border-radius: 28px;
+  border-radius: var(--radius);
   background: var(--panel);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.58);
+  border: 3px solid var(--line);
   box-shadow: var(--shadow);
 }
 
@@ -214,9 +220,9 @@ select {
 
 .mini-stat {
   padding: 18px;
-  border-radius: 20px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(241,245,255,0.85));
-  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #fff8ea;
+  border: 3px solid var(--line);
 }
 
 .mini-stat-label {
@@ -269,17 +275,19 @@ select {
   margin-bottom: 8px;
   font-size: 14px;
   font-weight: 700;
-  color: #2e3a56;
+  color: var(--text);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 .input,
 .select,
 .textarea {
   width: 100%;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.92);
+  border: 3px solid var(--line);
+  background: #fffdf7;
   color: var(--text);
-  border-radius: 16px;
+  border-radius: 0;
   padding: 14px 16px;
   outline: none;
   transition:
@@ -291,8 +299,8 @@ select {
 .input:focus,
 .select:focus,
 .textarea:focus {
-  border-color: rgba(91, 109, 246, 0.48);
-  box-shadow: 0 0 0 4px rgba(91, 109, 246, 0.12);
+  border-color: var(--accent-blue);
+  box-shadow: 6px 6px 0 rgba(15, 98, 254, 0.18);
 }
 
 .textarea {
@@ -308,8 +316,8 @@ select {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #32405e;
-  font-weight: 600;
+  color: var(--text);
+  font-weight: 700;
 }
 
 .action-row {
@@ -324,11 +332,13 @@ select {
   justify-content: center;
   min-height: 46px;
   padding: 0 18px;
-  border-radius: 999px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.86);
-  color: #24314d;
-  font-weight: 700;
+  border-radius: 0;
+  border: 3px solid var(--line);
+  background: #fff8ea;
+  color: var(--text);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   cursor: pointer;
   transition:
     transform 0.16s ease,
@@ -338,29 +348,27 @@ select {
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 24px rgba(64, 89, 145, 0.12);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 rgba(17, 17, 17, 0.92);
 }
 
 .btn-primary {
-  border-color: transparent;
-  color: white;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  box-shadow: 0 14px 30px rgba(91, 109, 246, 0.24);
+  color: #fff8ea;
+  background: var(--accent-red);
+  box-shadow: 6px 6px 0 rgba(17, 17, 17, 0.96);
 }
 
 .btn-danger {
-  border-color: transparent;
-  color: white;
-  background: linear-gradient(135deg, #ea5b7a, #cc466b);
-  box-shadow: 0 14px 30px rgba(227, 79, 111, 0.22);
+  color: #fff8ea;
+  background: var(--accent-black);
+  box-shadow: 6px 6px 0 rgba(217, 45, 32, 0.8);
 }
 
 .empty-state {
   padding: 30px;
-  border-radius: 22px;
-  border: 1px dashed var(--line-strong);
-  background: rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius);
+  border: 3px dashed var(--line-strong);
+  background: rgba(255, 248, 234, 0.76);
   color: var(--muted);
   text-align: center;
 }
@@ -373,10 +381,10 @@ select {
 
 .image-card {
   overflow: hidden;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid var(--line);
-  box-shadow: 0 10px 24px rgba(64, 89, 145, 0.08);
+  border-radius: var(--radius);
+  background: #fffaf0;
+  border: 3px solid var(--line);
+  box-shadow: var(--shadow-soft);
 }
 
 .image-card-preview-wrap {
@@ -387,8 +395,8 @@ select {
   width: 100%;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 18px;
-  background: rgba(223, 231, 255, 0.8);
+  border-radius: var(--radius);
+  background: rgba(15, 98, 254, 0.1);
 }
 
 .image-card-body {
@@ -431,10 +439,10 @@ select {
   max-width: 320px;
   aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 24px;
+  border-radius: var(--radius);
   justify-self: end;
-  border: 1px solid var(--line);
-  background: rgba(223, 231, 255, 0.8);
+  border: 3px solid var(--line);
+  background: rgba(15, 98, 254, 0.08);
 }
 
 .image-preview-empty {
@@ -451,9 +459,9 @@ select {
 
 .table-wrap {
   overflow-x: auto;
-  border-radius: 22px;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.76);
+  border-radius: var(--radius);
+  border: 3px solid var(--line);
+  background: #fffaf0;
 }
 
 table {
@@ -471,9 +479,11 @@ td {
 
 th {
   font-size: 13px;
-  color: var(--muted);
-  font-weight: 700;
-  background: rgba(243, 247, 255, 0.95);
+  color: var(--text);
+  font-weight: 900;
+  background: var(--accent-yellow);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
 }
 
 tr:last-child td {
@@ -514,7 +524,7 @@ tr:last-child td {
   .pretty-panel,
   .hero-card,
   .sidebar {
-    border-radius: 22px;
+    border-radius: var(--radius);
   }
 
   .grid-2 {
