@@ -35,8 +35,11 @@ export function StepEditor({
 }: {
   step: {
     id: number;
-    humor_flavor_id: number;
-    order_by: number;
+    humor_flavor_id?: number;
+    flavor_id?: number;
+    parent_flavor_id?: number;
+    order_by?: number;
+    order?: number;
     llm_temperature: number | null;
     llm_input_type_id: number;
     llm_output_type_id: number;
@@ -53,9 +56,12 @@ export function StepEditor({
   outputTypes: OutputTypeOption[];
 }) {
   const router = useRouter();
+  const initialFlavorId =
+    step.humor_flavor_id ?? step.flavor_id ?? step.parent_flavor_id ?? 0;
+  const initialOrder = step.order_by ?? step.order ?? 1;
 
-  const [humorFlavorId, setHumorFlavorId] = useState<number>(step.humor_flavor_id);
-  const [orderBy, setOrderBy] = useState<number>(step.order_by);
+  const [humorFlavorId, setHumorFlavorId] = useState<number>(initialFlavorId);
+  const [orderBy, setOrderBy] = useState<number>(initialOrder);
   const [llmTemperature, setLlmTemperature] = useState<string>(
     step.llm_temperature?.toString() ?? ""
   );

@@ -7,7 +7,6 @@ const navItems = [
   { key: "steps", href: "/admin/steps", label: "Steps" },
   { key: "images", href: "/admin/images", label: "Images" },
   { key: "testing", href: "/admin/testing", label: "Testing" },
-  { key: "humor-mix", href: "/admin/humor-mix", label: "Humor Mix" },
 ];
 
 export function AdminShell({

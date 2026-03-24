@@ -1,5 +1,6 @@
 import { assertAdminByAccessToken } from "@/lib/auth";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { getFlavorRefKey, getOrderKey } from "@/lib/stepSchema";
 
 async function detectStepSchema() {
   const admin = supabaseAdmin();
@@ -8,19 +9,10 @@ async function detectStepSchema() {
 
   const sample = data?.[0] ?? {};
 
-  const flavorKey =
-    "humor_flavor_id" in sample
-      ? "humor_flavor_id"
-      : "flavor_id" in sample
-      ? "flavor_id"
-      : "parent_flavor_id" in sample
-      ? "parent_flavor_id"
-      : "humor_flavor_id";
-
-  const orderKey =
-    "order_by" in sample ? "order_by" : "order" in sample ? "order" : "order_by";
-
-  return { flavorKey, orderKey };
+  return {
+    flavorKey: getFlavorRefKey(sample),
+    orderKey: getOrderKey(sample),
+  };
 }
 
 export async function PATCH(
@@ -43,7 +35,7 @@ export async function PATCH(
     const admin = supabaseAdmin();
     const { flavorKey, orderKey } = await detectStepSchema();
 
-    const payload: Record<string, any> = {
+    const payload: Record<string, number | string | null> = {
       llm_temperature:
         body.llm_temperature === "" ||
         body.llm_temperature === null ||

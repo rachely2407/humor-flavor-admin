@@ -4,33 +4,7 @@ import { AdminShell } from "@/components/admin-shell";
 import { StepCreator } from "@/components/step-creator";
 import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
-
-type StepRow = Record<string, any>;
-type FlavorRow = Record<string, any>;
-
-function getFlavorRefKey(sample: StepRow) {
-  if ("humor_flavor_id" in sample) return "humor_flavor_id";
-  if ("flavor_id" in sample) return "flavor_id";
-  if ("parent_flavor_id" in sample) return "parent_flavor_id";
-  return "humor_flavor_id";
-}
-
-function getOrderKey(sample: StepRow) {
-  if ("order_by" in sample) return "order_by";
-  if ("order" in sample) return "order";
-  return "order_by";
-}
-
-function getFlavorLabel(flavor: FlavorRow) {
-  return (
-    flavor.slug ??
-    flavor.name ??
-    flavor.title ??
-    flavor.label ??
-    flavor.description ??
-    `Flavor ${flavor.id}`
-  );
-}
+import { getFlavorLabel, getFlavorRefKey, getOrderKey } from "@/lib/stepSchema";
 
 async function moveStep(stepId: number, direction: "up" | "down") {
   "use server";

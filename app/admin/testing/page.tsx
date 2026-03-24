@@ -3,7 +3,14 @@ import { CaptionTestingPanel } from "@/components/caption-testing-panel";
 import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
-type FlavorRow = Record<string, any>;
+type FlavorRow = {
+  id: number;
+  slug?: unknown;
+  name?: unknown;
+  title?: unknown;
+  label?: unknown;
+  description?: unknown;
+};
 
 function normalizeFlavor(flavor: FlavorRow) {
   const label =
@@ -16,7 +23,10 @@ function normalizeFlavor(flavor: FlavorRow) {
   return {
     id: flavor.id,
     slug: String(label),
-    description: flavor.description ?? null,
+    description:
+      flavor.description === undefined || flavor.description === null
+        ? null
+        : String(flavor.description),
   };
 }
 

@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
+import { uploadImageFile } from "@/lib/imageUpload";
 
 type Flavor = {
   id: number;
@@ -81,38 +82,7 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
         throw new Error("No active Supabase session found. Please log in again.");
       }
 
-      const presignedRes = await fetch(
-        "https://api.almostcrackd.ai/pipeline/generate-presigned-url",
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            contentType: image.type,
-          }),
-        }
-      );
-
-      if (!presignedRes.ok) {
-        const text = await presignedRes.text();
-        throw new Error(`Failed to generate presigned upload URL: ${text}`);
-      }
-
-      const presignedData = await presignedRes.json();
-
-      const uploadRes = await fetch(presignedData.presignedUrl, {
-        method: "PUT",
-        headers: {
-          "Content-Type": image.type,
-        },
-        body: image,
-      });
-
-      if (!uploadRes.ok) {
-        throw new Error("Failed to upload the image to the presigned URL.");
-      }
+      const cdnUrl = await uploadImageFile(image, token);
 
       const registerRes = await fetch(
         "https://api.almostcrackd.ai/pipeline/upload-image-from-url",
@@ -123,7 +93,7 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            imageUrl: presignedData.cdnUrl,
+            imageUrl: cdnUrl,
             isCommonUse: false,
           }),
         }
@@ -135,7 +105,7 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
       }
 
       const registerData = await registerRes.json();
-      setImageUrl(presignedData.cdnUrl);
+      setImageUrl(cdnUrl);
 
       const captionRes = await fetch(
         "https://api.almostcrackd.ai/pipeline/generate-captions",
@@ -159,8 +129,9 @@ export function CaptionTestingPanel({ flavors }: { flavors: Flavor[] }) {
 
       const captionData = await captionRes.json();
       setResult(Array.isArray(captionData) ? captionData : [captionData]);
-    } catch (error: any) {
-      const message = error.message || "Caption generation failed.";
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Caption generation failed.";
       setErrorMessage(message);
     }
 

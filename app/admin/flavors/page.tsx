@@ -3,7 +3,15 @@ import { AdminShell } from "@/components/admin-shell";
 import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
-type FlavorRow = Record<string, any>;
+type FlavorRow = {
+  id: number | string;
+  slug?: unknown;
+  name?: unknown;
+  title?: unknown;
+  label?: unknown;
+  description?: unknown;
+  created_datetime_utc?: string | null;
+};
 
 function getFlavorLabel(flavor: FlavorRow) {
   return (

@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AdminShell } from "@/components/admin-shell";
 import { supabase } from "@/lib/supabaseClient";
+import { uploadImageFile } from "@/lib/imageUpload";
 
 type ImageRow = {
   id: string;
@@ -27,7 +28,9 @@ function AdminImagesPageInner() {
   const [url, setUrl] = useState("");
   const [imageDescription, setImageDescription] = useState("");
   const [isPublic, setIsPublic] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [creating, setCreating] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const filteredImages = useMemo(() => images.slice(0, 100), [images]);
 
@@ -65,6 +68,18 @@ function AdminImagesPageInner() {
       return;
     }
 
+    let uploadedUrl = url.trim();
+
+    try {
+      if (selectedFile) {
+        uploadedUrl = await uploadImageFile(selectedFile, session.access_token);
+      }
+    } catch (error) {
+      setCreating(false);
+      alert(error instanceof Error ? error.message : "Failed to upload image.");
+      return;
+    }
+
     const response = await fetch("/api/admin/images", {
       method: "POST",
       headers: {
@@ -72,7 +87,7 @@ function AdminImagesPageInner() {
         Authorization: `Bearer ${session.access_token}`,
       },
       body: JSON.stringify({
-        url,
+        url: uploadedUrl,
         image_description: imageDescription,
         is_public: isPublic,
       }),
@@ -90,6 +105,10 @@ function AdminImagesPageInner() {
     setUrl("");
     setImageDescription("");
     setIsPublic(false);
+    setSelectedFile(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
     await loadImages();
     router.refresh();
   }
@@ -128,11 +147,43 @@ function AdminImagesPageInner() {
               fontSize: 15,
             }}
           >
-            Add a new image row directly to the images table.
+            Upload a new file or save an existing image URL into the images table.
           </p>
         </div>
 
         <form onSubmit={handleCreate}>
+          <div style={{ marginBottom: 16 }}>
+            <label
+              style={{
+                display: "block",
+                marginBottom: 8,
+                fontSize: 14,
+                fontWeight: 700,
+                color: "#2e3a56",
+              }}
+            >
+              Image file
+            </label>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/jpg,image/png,image/webp,image/gif,image/heic"
+              onChange={(e) => setSelectedFile(e.target.files?.[0] ?? null)}
+            />
+            <p
+              style={{
+                margin: "8px 0 0 0",
+                color: "#63708a",
+                lineHeight: 1.6,
+                fontSize: 13,
+              }}
+            >
+              {selectedFile
+                ? `Selected file: ${selectedFile.name}`
+                : "Optional. If a file is selected, its uploaded CDN URL will be saved automatically."}
+            </p>
+          </div>
+
           <div style={{ marginBottom: 16 }}>
             <label
               style={{
@@ -149,7 +200,7 @@ function AdminImagesPageInner() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://..."
-              required
+              required={!selectedFile}
               style={{
                 width: "100%",
                 border: "1px solid rgba(80,98,140,0.16)",

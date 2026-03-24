@@ -3,6 +3,7 @@ import { AdminShell } from "@/components/admin-shell";
 import { StepEditor } from "@/components/step-editor";
 import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
+import { getFlavorRefKey, getOrderKey } from "@/lib/stepSchema";
 
 export default async function AdminStepDetailPage({
   params,
@@ -19,6 +20,18 @@ export default async function AdminStepDetailPage({
   }
 
   const admin = supabaseAdmin();
+  const { data: sampleRows, error: sampleError } = await admin
+    .from("humor_flavor_steps")
+    .select("*")
+    .limit(1);
+
+  if (sampleError) {
+    throw new Error(sampleError.message);
+  }
+
+  const sample = sampleRows?.[0] ?? {};
+  const flavorKey = getFlavorRefKey(sample);
+  const orderKey = getOrderKey(sample);
 
   const [
     { data: step, error: stepError },
@@ -33,8 +46,8 @@ export default async function AdminStepDetailPage({
       .select(
         `
           id,
-          humor_flavor_id,
-          order_by,
+          ${flavorKey},
+          ${orderKey},
           llm_temperature,
           llm_input_type_id,
           llm_output_type_id,
