@@ -19,11 +19,11 @@ export async function assertAdminByAccessToken(authHeader: string | null) {
 
   const { data: profile, error: profileError } = await admin
     .from("profiles")
-    .select("is_superadmin, is_matrix_admin")
+    .select("is_superadmin")
     .eq("id", user.id)
     .single();
 
-  if (profileError || !profile || (!profile.is_superadmin && !profile.is_matrix_admin)) {
+  if (profileError || !profile?.is_superadmin) {
     throw new Error("Forbidden");
   }
 

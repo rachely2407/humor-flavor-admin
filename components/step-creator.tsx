@@ -72,23 +72,41 @@ export function StepCreator({
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase.from("humor_flavor_steps").insert({
-      humor_flavor_id: humorFlavorId,
-      order_by: orderBy,
-      llm_temperature: llmTemperature === "" ? null : Number(llmTemperature),
-      llm_input_type_id: llmInputTypeId,
-      llm_output_type_id: llmOutputTypeId,
-      llm_model_id: llmModelId,
-      humor_flavor_step_type_id: humorFlavorStepTypeId,
-      llm_system_prompt: llmSystemPrompt,
-      llm_user_prompt: llmUserPrompt,
-      description: description || null,
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session?.access_token) {
+      setLoading(false);
+      alert("You must be logged in.");
+      return;
+    }
+
+    const response = await fetch("/api/admin/steps", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({
+        humor_flavor_id: humorFlavorId,
+        order_by: orderBy,
+        llm_temperature: llmTemperature,
+        llm_input_type_id: llmInputTypeId,
+        llm_output_type_id: llmOutputTypeId,
+        llm_model_id: llmModelId,
+        humor_flavor_step_type_id: humorFlavorStepTypeId,
+        llm_system_prompt: llmSystemPrompt,
+        llm_user_prompt: llmUserPrompt,
+        description,
+      }),
     });
 
+    const result = await response.json();
     setLoading(false);
 
-    if (error) {
-      alert(error.message);
+    if (!response.ok) {
+      alert(result.error || "Failed to create humor flavor step.");
       return;
     }
 

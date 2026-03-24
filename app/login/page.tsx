@@ -12,8 +12,12 @@ export default function LoginPage() {
 
     if (error === "forbidden") {
       setErrorMessage(
-        "This account is not authorized. Only superadmins or matrix admins can access this tool."
+        "This account is not authorized. Only superadmins can access this admin panel."
       );
+    }
+
+    if (error === "oauth") {
+      setErrorMessage("Google login failed. Please try again.");
     }
   }, []);
 
@@ -53,14 +57,14 @@ export default function LoginPage() {
     >
       <div className="card" style={{ width: "100%", maxWidth: 520, padding: 28 }}>
         <div className="badge" style={{ marginBottom: 12 }}>
-          🎀 Matrix Admin Login
+          Admin Login
         </div>
 
         <h1 style={{ marginTop: 0, marginBottom: 12 }}>Humor Flavor Admin</h1>
 
         <p style={{ opacity: 0.8, lineHeight: 1.6 }}>
           Sign in with Google. Access is restricted to accounts whose profile has{" "}
-          <code>is_superadmin</code> or <code>is_matrix_admin</code>.
+          <code>is_superadmin</code> set to true.
         </p>
 
         {errorMessage && (

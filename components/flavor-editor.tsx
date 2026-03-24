@@ -20,22 +20,43 @@ export function FlavorEditor({
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
+  async function getAccessToken() {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    return session?.access_token ?? null;
+  }
+
   async function handleUpdate(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase
-      .from("humor_flavors")
-      .update({
+    const token = await getAccessToken();
+
+    if (!token) {
+      setLoading(false);
+      alert("You must be logged in.");
+      return;
+    }
+
+    const response = await fetch(`/api/admin/flavors/${flavor.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
         slug,
         description,
-      })
-      .eq("id", flavor.id);
+      }),
+    });
 
+    const result = await response.json();
     setLoading(false);
 
-    if (error) {
-      alert(error.message);
+    if (!response.ok) {
+      alert(result.error || "Failed to update humor flavor.");
       return;
     }
 
@@ -52,15 +73,26 @@ export function FlavorEditor({
 
     setDeleting(true);
 
-    const { error } = await supabase
-      .from("humor_flavors")
-      .delete()
-      .eq("id", flavor.id);
+    const token = await getAccessToken();
 
+    if (!token) {
+      setDeleting(false);
+      alert("You must be logged in.");
+      return;
+    }
+
+    const response = await fetch(`/api/admin/flavors/${flavor.id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const result = await response.json().catch(() => ({}));
     setDeleting(false);
 
-    if (error) {
-      alert(error.message);
+    if (!response.ok) {
+      alert(result.error || "Failed to delete humor flavor.");
       return;
     }
 

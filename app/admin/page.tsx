@@ -1,228 +1,281 @@
 import Link from "next/link";
 import { AdminShell } from "@/components/admin-shell";
+import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
 
-export default async function AdminHomePage() {
+export default async function AdminDashboardPage() {
+  await requireMatrixOrSuperadmin();
+
   const admin = supabaseAdmin();
 
   const [
-    { count: flavorCount, error: flavorCountError },
-    { count: stepCount, error: stepCountError },
-    { data: recentFlavors, error: recentFlavorsError },
-    { data: stepsByFlavor, error: stepsByFlavorError },
+    { count: flavorCount },
+    { count: stepCount },
+    { count: imageCount },
+    { count: captionCount },
+    { count: publicImageCount },
   ] = await Promise.all([
     admin.from("humor_flavors").select("*", { count: "exact", head: true }),
     admin.from("humor_flavor_steps").select("*", { count: "exact", head: true }),
-    admin
-      .from("humor_flavors")
-      .select("id, slug, description, created_datetime_utc")
-      .order("created_datetime_utc", { ascending: false })
-      .limit(5),
-    admin.from("humor_flavor_steps").select("humor_flavor_id"),
+    admin.from("images").select("*", { count: "exact", head: true }),
+    admin.from("captions").select("*", { count: "exact", head: true }),
+    admin.from("images").select("*", { count: "exact", head: true }).eq("is_public", true),
   ]);
 
-  if (flavorCountError) throw new Error(flavorCountError.message);
-  if (stepCountError) throw new Error(stepCountError.message);
-  if (recentFlavorsError) throw new Error(recentFlavorsError.message);
-  if (stepsByFlavorError) throw new Error(stepsByFlavorError.message);
-
-  const totalFlavors = flavorCount ?? 0;
-  const totalSteps = stepCount ?? 0;
-  const avgStepsPerFlavor =
-    totalFlavors > 0 ? (totalSteps / totalFlavors).toFixed(1) : "0.0";
-
-  const distribution = new Map<number, number>();
-  for (const row of stepsByFlavor ?? []) {
-    const flavorId = row.humor_flavor_id;
-    distribution.set(flavorId, (distribution.get(flavorId) ?? 0) + 1);
-  }
-
-  const maxStepsInFlavor =
-    distribution.size > 0 ? Math.max(...Array.from(distribution.values())) : 0;
-
-  const flavorsWithNoSteps = Math.max(totalFlavors - distribution.size, 0);
+  const cards = [
+    {
+      title: "Humor Flavors",
+      count: flavorCount ?? 0,
+      description: "Manage humor flavor definitions and descriptions.",
+      href: "/admin/flavors",
+      button: "Open flavors",
+    },
+    {
+      title: "Flavor Steps",
+      count: stepCount ?? 0,
+      description: "Edit prompt-chain steps, order, and model settings.",
+      href: "/admin/steps",
+      button: "Open steps",
+    },
+    {
+      title: "Images",
+      count: imageCount ?? 0,
+      description: "Create, inspect, edit, and delete image records.",
+      href: "/admin/images",
+      button: "Open images",
+    },
+    {
+      title: "Testing",
+      count: captionCount ?? 0,
+      description: "Review output-related records and testing workflows.",
+      href: "/admin/testing",
+      button: "Open testing",
+    },
+  ];
 
   return (
     <AdminShell
       title="Dashboard"
       current="dashboard"
-      description="An operational command center for flavor architecture, prompt-chain coverage, and caption generation workflows."
-      stats={[
-        {
-          label: "Humor Flavors",
-          value: totalFlavors,
-          meta: "Catalog entries currently available",
-        },
-        {
-          label: "Flavor Steps",
-          value: totalSteps,
-          meta: "Prompt-chain steps configured system-wide",
-        },
-        {
-          label: "Avg. Steps / Flavor",
-          value: avgStepsPerFlavor,
-          meta: "Average chain complexity",
-        },
-        {
-          label: "Coverage Gap",
-          value: flavorsWithNoSteps,
-          meta: "Flavors still missing step definitions",
-        },
-      ]}
+      description="Protected admin overview for managing flavors, steps, images, and testing tools."
     >
-      <div className="dashboard-grid">
-        <div className="metric-card span-3">
-          <div className="metric-card-label">Catalog Health</div>
-          <div className="metric-card-value">{totalFlavors}</div>
-          <div className="metric-card-meta">
-            Active humor flavor entries available for editing and testing.
-          </div>
-        </div>
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 18,
+        }}
+      >
+        {cards.map((card) => (
+          <article
+            key={card.title}
+            style={{
+              padding: 24,
+              borderRadius: 28,
+              background: "rgba(255,255,255,0.90)",
+              border: "1px solid rgba(255,255,255,0.72)",
+              boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+            }}
+          >
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "7px 12px",
+                borderRadius: 999,
+                background: "rgba(91,109,246,0.09)",
+                border: "1px solid rgba(91,109,246,0.12)",
+                color: "#4353c7",
+                fontSize: 12,
+                fontWeight: 700,
+                marginBottom: 12,
+              }}
+            >
+              Admin Tool
+            </div>
 
-        <div className="metric-card span-3">
-          <div className="metric-card-label">Workflow Coverage</div>
-          <div className="metric-card-value">{totalSteps}</div>
-          <div className="metric-card-meta">
-            Total number of configured prompt-chain steps across the system.
-          </div>
-        </div>
+            <h2
+              style={{
+                margin: "0 0 8px 0",
+                fontSize: 18,
+                color: "#172033",
+              }}
+            >
+              {card.title}
+            </h2>
 
-        <div className="metric-card span-3">
-          <div className="metric-card-label">Largest Chain</div>
-          <div className="metric-card-value">{maxStepsInFlavor}</div>
-          <div className="metric-card-meta">
-            Highest number of steps currently attached to a single flavor.
-          </div>
-        </div>
+            <div
+              style={{
+                fontSize: 38,
+                fontWeight: 800,
+                lineHeight: 1,
+                color: "#172033",
+                marginBottom: 10,
+              }}
+            >
+              {card.count}
+            </div>
 
-        <div className="metric-card span-3">
-          <div className="metric-card-label">Coverage Gap</div>
-          <div className="metric-card-value">{flavorsWithNoSteps}</div>
-          <div className="metric-card-meta">
-            Flavors that exist in the catalog but still have no configured steps.
-          </div>
-        </div>
+            <p
+              style={{
+                margin: "0 0 18px 0",
+                color: "#63708a",
+                lineHeight: 1.6,
+                minHeight: 72,
+              }}
+            >
+              {card.description}
+            </p>
 
-        <Link href="/admin/flavors" className="dashboard-link-card span-4">
-          <div className="dashboard-link-kicker">Catalog</div>
-          <h2>🎭 Humor Flavors</h2>
-          <p>
-            Review, create, edit, and organize the flavor catalog with a cleaner,
-            more intentional operational view.
-          </p>
-          <div className="dashboard-link-metric">{totalFlavors}</div>
-          <div className="dashboard-link-meta">Total flavor records available</div>
-          <div className="dashboard-link-cta">Open flavor catalog →</div>
-        </Link>
-
-        <Link href="/admin/steps" className="dashboard-link-card span-4">
-          <div className="dashboard-link-kicker">Workflow</div>
-          <h2>⚙️ Flavor Steps</h2>
-          <p>
-            Manage sequencing, structure, and step configuration logic for every
-            humor flavor prompt chain.
-          </p>
-          <div className="dashboard-link-metric">{totalSteps}</div>
-          <div className="dashboard-link-meta">Step definitions across all flavors</div>
-          <div className="dashboard-link-cta">Open step manager →</div>
-        </Link>
-
-        <Link href="/admin/testing" className="dashboard-link-card span-4">
-          <div className="dashboard-link-kicker">Testing</div>
-          <h2>🧪 Caption Testing</h2>
-          <p>
-            Run generation workflows against the image test set and inspect how each
-            flavor chain performs end to end.
-          </p>
-          <div className="dashboard-link-metric">{avgStepsPerFlavor}</div>
-          <div className="dashboard-link-meta">Average steps driving each chain</div>
-          <div className="dashboard-link-cta">Open testing workspace →</div>
-        </Link>
-
-        <section className="insight-card span-7">
-          <h3 className="insight-title">Recent flavor activity</h3>
-          <p className="insight-copy">
-            Recently created flavors help you quickly spot new entries that may still
-            need descriptions, step coverage, or testing.
-          </p>
-
-          <div className="activity-list">
-            {(recentFlavors ?? []).length > 0 ? (
-              recentFlavors!.map((flavor) => {
-                const count = distribution.get(flavor.id) ?? 0;
-
-                return (
-                  <div key={flavor.id} className="activity-item">
-                    <div className="activity-item-left">
-                      <div className="activity-item-title">
-                        {flavor.slug || `Flavor #${flavor.id}`}
-                      </div>
-                      <div className="activity-item-subtitle">
-                        {flavor.description || "No description added yet."}
-                      </div>
-                    </div>
-
-                    <div className="activity-item-right">
-                      <div className={`badge ${count === 0 ? "badge-warning" : ""}`}>
-                        {count} step{count === 1 ? "" : "s"}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })
-            ) : (
-              <div className="activity-item">
-                <div className="activity-item-left">
-                  <div className="activity-item-title">No flavor activity yet</div>
-                  <div className="activity-item-subtitle">
-                    Create your first humor flavor to begin building the catalog.
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        </section>
-
-        <section className="insight-card span-5">
-          <h3 className="insight-title">Operational summary</h3>
-          <p className="insight-copy">
-            Use this view to prioritize missing setup, jump directly into editing,
-            and keep the flavor system moving with less guesswork.
-          </p>
-
-          <div className="quick-links">
-            <Link href="/admin/flavors" className="quick-link">
-              <div>
-                <div className="quick-link-title">Review flavor catalog</div>
-                <div className="quick-link-copy">
-                  Audit naming, descriptions, and flavor completeness.
-                </div>
-              </div>
-              <div className="badge">Open</div>
+            <Link
+              href={card.href}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                minHeight: 44,
+                padding: "0 18px",
+                borderRadius: 999,
+                textDecoration: "none",
+                color: "#fff",
+                fontWeight: 700,
+                background: "linear-gradient(135deg, #5b6df6, #7c5cff)",
+                boxShadow: "0 14px 30px rgba(91,109,246,0.18)",
+              }}
+            >
+              {card.button}
             </Link>
+          </article>
+        ))}
+      </section>
 
-            <Link href="/admin/steps" className="quick-link">
-              <div>
-                <div className="quick-link-title">Refine step structure</div>
-                <div className="quick-link-copy">
-                  Improve sequence quality and prompt-chain coverage.
-                </div>
-              </div>
-              <div className="badge">Open</div>
-            </Link>
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "1.2fr 0.8fr",
+          gap: 18,
+        }}
+      >
+        <div
+          style={{
+            padding: 28,
+            borderRadius: 28,
+            background: "rgba(255,255,255,0.90)",
+            border: "1px solid rgba(255,255,255,0.72)",
+            boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          }}
+        >
+          <h2
+            style={{
+              margin: "0 0 12px 0",
+              fontSize: 24,
+              color: "#172033",
+            }}
+          >
+            Admin system status
+          </h2>
 
-            <Link href="/admin/testing" className="quick-link">
-              <div>
-                <div className="quick-link-title">Run caption tests</div>
-                <div className="quick-link-copy">
-                  Generate outputs and validate chain behavior.
-                </div>
+          <div
+            style={{
+              display: "grid",
+              gap: 12,
+            }}
+          >
+            {[
+              "Google login gate is enabled for admin access.",
+              "Superadmin-only protection is active on admin routes.",
+              "CRUD actions run through protected server routes.",
+              "Audit fields are included for staging database writes.",
+              "Images, flavors, and steps are all accessible from one admin nav.",
+            ].map((item) => (
+              <div
+                key={item}
+                style={{
+                  padding: "14px 16px",
+                  borderRadius: 18,
+                  background: "rgba(244,247,255,0.95)",
+                  border: "1px solid rgba(80,98,140,0.12)",
+                  color: "#32405e",
+                  fontWeight: 600,
+                  lineHeight: 1.5,
+                }}
+              >
+                {item}
               </div>
-              <div className="badge badge-success">Live</div>
-            </Link>
+            ))}
           </div>
-        </section>
-      </div>
+        </div>
+
+        <div
+          style={{
+            padding: 28,
+            borderRadius: 28,
+            background: "rgba(255,255,255,0.90)",
+            border: "1px solid rgba(255,255,255,0.72)",
+            boxShadow: "0 18px 50px rgba(73, 98, 146, 0.12)",
+          }}
+        >
+          <h2
+            style={{
+              margin: "0 0 14px 0",
+              fontSize: 24,
+              color: "#172033",
+            }}
+          >
+            Quick snapshot
+          </h2>
+
+          <div style={{ display: "grid", gap: 14 }}>
+            <div
+              style={{
+                padding: 18,
+                borderRadius: 20,
+                background: "rgba(244,247,255,0.95)",
+                border: "1px solid rgba(80,98,140,0.12)",
+              }}
+            >
+              <div style={{ color: "#63708a", fontSize: 13, fontWeight: 700, marginBottom: 6 }}>
+                Total images
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 800, color: "#172033" }}>
+                {imageCount ?? 0}
+              </div>
+            </div>
+
+            <div
+              style={{
+                padding: 18,
+                borderRadius: 20,
+                background: "rgba(244,247,255,0.95)",
+                border: "1px solid rgba(80,98,140,0.12)",
+              }}
+            >
+              <div style={{ color: "#63708a", fontSize: 13, fontWeight: 700, marginBottom: 6 }}>
+                Public images
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 800, color: "#172033" }}>
+                {publicImageCount ?? 0}
+              </div>
+            </div>
+
+            <div
+              style={{
+                padding: 18,
+                borderRadius: 20,
+                background: "rgba(244,247,255,0.95)",
+                border: "1px solid rgba(80,98,140,0.12)",
+              }}
+            >
+              <div style={{ color: "#63708a", fontSize: 13, fontWeight: 700, marginBottom: 6 }}>
+                Total captions
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 800, color: "#172033" }}>
+                {captionCount ?? 0}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </AdminShell>
   );
 }

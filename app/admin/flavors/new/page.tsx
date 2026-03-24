@@ -16,22 +16,37 @@ export default function NewFlavorPage() {
     e.preventDefault();
     setLoading(true);
 
-    const { error } = await supabase
-      .from("humor_flavors")
-      .insert({
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session?.access_token) {
+      setLoading(false);
+      alert("You must be logged in.");
+      return;
+    }
+
+    const response = await fetch("/api/admin/flavors", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session.access_token}`,
+      },
+      body: JSON.stringify({
         slug,
         description,
-      });
+      }),
+    });
 
+    const result = await response.json();
     setLoading(false);
 
-    if (error) {
-      alert(error.message);
+    if (!response.ok) {
+      alert(result.error || "Failed to create humor flavor.");
       return;
     }
 
     alert("Humor flavor created successfully");
-
     router.push("/admin/flavors");
     router.refresh();
   }
