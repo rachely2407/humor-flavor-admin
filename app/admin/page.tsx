@@ -74,14 +74,14 @@ export default async function AdminDashboardPage() {
               borderRadius: 8,
               background:
                 card.title === "Humor Flavors"
-                  ? "#fff8ea"
+                  ? "var(--surface-cream)"
                   : card.title === "Flavor Steps"
-                  ? "#f4c300"
+                  ? "var(--surface-yellow)"
                   : card.title === "Images"
-                  ? "#0f62fe"
-                  : "#d92d20",
-              border: "3px solid #111111",
-              boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
+                  ? "var(--surface-blue)"
+                  : "var(--surface-red)",
+              border: "3px solid var(--line)",
+              boxShadow: "var(--shadow)",
             }}
           >
             <div
@@ -90,9 +90,9 @@ export default async function AdminDashboardPage() {
                 alignItems: "center",
                 padding: "7px 12px",
                 borderRadius: 0,
-                background: "rgba(255,248,234,0.92)",
-                border: "2px solid #111111",
-                color: "#111111",
+                background: "var(--surface-soft)",
+                border: "2px solid var(--line)",
+                color: "var(--text)",
                 fontSize: 12,
                 fontWeight: 900,
                 textTransform: "uppercase",
@@ -109,8 +109,8 @@ export default async function AdminDashboardPage() {
                 fontSize: 18,
                 color:
                   card.title === "Images" || card.title === "Testing"
-                    ? "#fff8ea"
-                    : "#111111",
+                    ? "var(--surface-text-on-dark)"
+                    : "var(--text)",
                 textTransform: "uppercase",
               }}
             >
@@ -124,8 +124,8 @@ export default async function AdminDashboardPage() {
                 lineHeight: 1,
                 color:
                   card.title === "Images" || card.title === "Testing"
-                    ? "#fff8ea"
-                    : "#111111",
+                    ? "var(--surface-text-on-dark)"
+                    : "var(--text)",
                 marginBottom: 10,
               }}
             >
@@ -137,8 +137,8 @@ export default async function AdminDashboardPage() {
                 margin: "0 0 18px 0",
                 color:
                   card.title === "Images" || card.title === "Testing"
-                    ? "rgba(255,248,234,0.86)"
-                    : "#323232",
+                    ? "color-mix(in srgb, var(--surface-text-on-dark) 84%, transparent)"
+                    : "var(--muted)",
                 lineHeight: 1.6,
                 minHeight: 72,
               }}
@@ -156,13 +156,13 @@ export default async function AdminDashboardPage() {
                 padding: "0 18px",
                 borderRadius: 0,
                 textDecoration: "none",
-                color: "#111111",
+                color: "var(--text)",
                 fontWeight: 900,
                 textTransform: "uppercase",
                 letterSpacing: "0.06em",
-                background: "#fff8ea",
-                border: "3px solid #111111",
-                boxShadow: "6px 6px 0 rgba(17,17,17,0.96)",
+                background: "var(--surface-soft)",
+                border: "3px solid var(--line)",
+                boxShadow: "var(--shadow-soft)",
               }}
             >
               {card.button}
@@ -182,16 +182,16 @@ export default async function AdminDashboardPage() {
           style={{
             padding: 28,
             borderRadius: 8,
-            background: "#fff8ea",
-            border: "3px solid #111111",
-            boxShadow: "10px 10px 0 rgba(17,17,17,0.96)",
+            background: "var(--surface-cream)",
+            border: "3px solid var(--line)",
+            boxShadow: "var(--shadow)",
           }}
         >
           <h2
             style={{
               margin: "0 0 12px 0",
               fontSize: 24,
-              color: "#111111",
+              color: "var(--text)",
               textTransform: "uppercase",
             }}
           >
@@ -216,9 +216,13 @@ export default async function AdminDashboardPage() {
                 style={{
                   padding: "14px 16px",
                   borderRadius: 0,
-                  background: item.includes("CRUD") ? "#0f62fe" : "#fffdf7",
-                  border: "2px solid #111111",
-                  color: item.includes("CRUD") ? "#fff8ea" : "#111111",
+                  background: item.includes("CRUD")
+                    ? "var(--surface-blue)"
+                    : "var(--surface-soft)",
+                  border: "2px solid var(--line)",
+                  color: item.includes("CRUD")
+                    ? "var(--surface-text-on-dark)"
+                    : "var(--text)",
                   fontWeight: 800,
                   lineHeight: 1.5,
                 }}
@@ -233,16 +237,16 @@ export default async function AdminDashboardPage() {
           style={{
             padding: 28,
             borderRadius: 8,
-            background: "#111111",
-            border: "3px solid #111111",
-            boxShadow: "10px 10px 0 rgba(217,45,32,0.92)",
+            background: "var(--surface-deep)",
+            border: "3px solid var(--line)",
+            boxShadow: "var(--shadow)",
           }}
         >
           <h2
             style={{
               margin: "0 0 14px 0",
               fontSize: 24,
-              color: "#fff8ea",
+              color: "var(--surface-text-on-dark)",
               textTransform: "uppercase",
             }}
           >
@@ -254,14 +258,14 @@ export default async function AdminDashboardPage() {
               style={{
                 padding: 18,
                 borderRadius: 0,
-                background: "#f4c300",
-                border: "2px solid #111111",
+                background: "var(--surface-yellow)",
+                border: "2px solid var(--line)",
               }}
             >
-              <div style={{ color: "#111111", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              <div style={{ color: "var(--text)", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Total images
               </div>
-              <div style={{ fontSize: 28, fontWeight: 900, color: "#111111" }}>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "var(--text)" }}>
                 {imageCount ?? 0}
               </div>
             </div>
@@ -270,14 +274,14 @@ export default async function AdminDashboardPage() {
               style={{
                 padding: 18,
                 borderRadius: 0,
-                background: "#fff8ea",
-                border: "2px solid #111111",
+                background: "var(--surface-cream)",
+                border: "2px solid var(--line)",
               }}
             >
-              <div style={{ color: "#111111", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              <div style={{ color: "var(--text)", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Public images
               </div>
-              <div style={{ fontSize: 28, fontWeight: 900, color: "#111111" }}>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "var(--text)" }}>
                 {publicImageCount ?? 0}
               </div>
             </div>
@@ -286,14 +290,14 @@ export default async function AdminDashboardPage() {
               style={{
                 padding: 18,
                 borderRadius: 0,
-                background: "#0f62fe",
-                border: "2px solid #111111",
+                background: "var(--surface-blue)",
+                border: "2px solid var(--line)",
               }}
             >
-              <div style={{ color: "#fff8ea", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+              <div style={{ color: "var(--surface-text-on-dark)", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
                 Total captions
               </div>
-              <div style={{ fontSize: 28, fontWeight: 900, color: "#fff8ea" }}>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "var(--surface-text-on-dark)" }}>
                 {captionCount ?? 0}
               </div>
             </div>
