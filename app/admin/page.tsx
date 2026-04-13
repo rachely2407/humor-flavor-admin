@@ -14,13 +14,36 @@ export default async function AdminDashboardPage() {
     { count: imageCount },
     { count: captionCount },
     { count: publicImageCount },
+    { count: voteCount },
+    { count: saveCount },
+    { data: voteRows },
   ] = await Promise.all([
     admin.from("humor_flavors").select("*", { count: "exact", head: true }),
     admin.from("humor_flavor_steps").select("*", { count: "exact", head: true }),
     admin.from("images").select("*", { count: "exact", head: true }),
     admin.from("captions").select("*", { count: "exact", head: true }),
     admin.from("images").select("*", { count: "exact", head: true }).eq("is_public", true),
+    admin.from("caption_votes").select("*", { count: "exact", head: true }),
+    admin.from("caption_saves").select("*", { count: "exact", head: true }),
+    admin
+      .from("caption_votes")
+      .select("vote_value, is_from_study, created_datetime_utc")
+      .order("created_datetime_utc", { ascending: false })
+      .limit(1000),
   ]);
+
+  const recentVoteRows = voteRows ?? [];
+  const totalVoteValue = recentVoteRows.reduce(
+    (sum, vote) => sum + Number(vote.vote_value ?? 0),
+    0
+  );
+  const averageVote =
+    recentVoteRows.length > 0
+      ? (totalVoteValue / recentVoteRows.length).toFixed(2)
+      : "0.00";
+  const studyVoteCount = recentVoteRows.filter((vote) => Boolean(vote.is_from_study)).length;
+  const positiveVoteCount = recentVoteRows.filter((vote) => Number(vote.vote_value ?? 0) > 0).length;
+  const negativeVoteCount = recentVoteRows.filter((vote) => Number(vote.vote_value ?? 0) < 0).length;
 
   const cards = [
     {
@@ -210,6 +233,8 @@ export default async function AdminDashboardPage() {
               "CRUD actions run through protected server routes.",
               "Audit fields are included for staging database writes.",
               "Images, flavors, and steps are all accessible from one admin nav.",
+              `Caption votes tracked: ${voteCount ?? 0}.`,
+              `Caption saves tracked: ${saveCount ?? 0}.`,
             ].map((item) => (
               <div
                 key={item}
@@ -301,8 +326,88 @@ export default async function AdminDashboardPage() {
                 {captionCount ?? 0}
               </div>
             </div>
+
+            <div
+              style={{
+                padding: 18,
+                borderRadius: 0,
+                background: "var(--surface-red)",
+                border: "2px solid var(--line)",
+              }}
+            >
+              <div style={{ color: "var(--surface-text-on-dark)", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                Total votes
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "var(--surface-text-on-dark)" }}>
+                {voteCount ?? 0}
+              </div>
+            </div>
+
+            <div
+              style={{
+                padding: 18,
+                borderRadius: 0,
+                background: "var(--surface-soft)",
+                border: "2px solid var(--line)",
+              }}
+            >
+              <div style={{ color: "var(--text)", fontSize: 13, fontWeight: 900, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                Total saves
+              </div>
+              <div style={{ fontSize: 28, fontWeight: 900, color: "var(--text)" }}>
+                {saveCount ?? 0}
+              </div>
+            </div>
           </div>
         </div>
+      </section>
+
+      <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+          gap: 18,
+        }}
+      >
+        {[
+          { label: "Average vote", value: averageVote, background: "var(--surface-yellow)", dark: false },
+          { label: "Study votes", value: studyVoteCount, background: "var(--surface-blue)", dark: true },
+          { label: "Positive votes", value: positiveVoteCount, background: "var(--surface-cream)", dark: false },
+          { label: "Negative votes", value: negativeVoteCount, background: "var(--surface-red)", dark: true },
+        ].map((stat) => (
+          <article
+            key={stat.label}
+            style={{
+              padding: 22,
+              borderRadius: 8,
+              background: stat.background,
+              border: "3px solid var(--line)",
+              boxShadow: "var(--shadow)",
+            }}
+          >
+            <div
+              style={{
+                fontSize: 13,
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.06em",
+                color: stat.dark ? "var(--surface-text-on-dark)" : "var(--text)",
+                marginBottom: 10,
+              }}
+            >
+              {stat.label}
+            </div>
+            <div
+              style={{
+                fontSize: 34,
+                fontWeight: 900,
+                color: stat.dark ? "var(--surface-text-on-dark)" : "var(--text)",
+              }}
+            >
+              {stat.value}
+            </div>
+          </article>
+        ))}
       </section>
     </AdminShell>
   );

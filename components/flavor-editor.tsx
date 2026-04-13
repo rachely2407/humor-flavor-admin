@@ -18,6 +18,7 @@ export function FlavorEditor({
   const [slug, setSlug] = useState(flavor.slug ?? "");
   const [description, setDescription] = useState(flavor.description ?? "");
   const [loading, setLoading] = useState(false);
+  const [duplicating, setDuplicating] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   async function getAccessToken() {
@@ -101,6 +102,37 @@ export function FlavorEditor({
     router.refresh();
   }
 
+  async function handleDuplicate() {
+    setDuplicating(true);
+
+    const token = await getAccessToken();
+
+    if (!token) {
+      setDuplicating(false);
+      alert("You must be logged in.");
+      return;
+    }
+
+    const response = await fetch(`/api/admin/flavors/${flavor.id}/duplicate`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const result = await response.json().catch(() => ({}));
+    setDuplicating(false);
+
+    if (!response.ok) {
+      alert(result.error || "Failed to duplicate humor flavor.");
+      return;
+    }
+
+    alert(`Humor flavor duplicated as "${result.slug}".`);
+    router.push(`/admin/flavors/${result.id}`);
+    router.refresh();
+  }
+
   return (
     <form
       onSubmit={handleUpdate}
@@ -129,6 +161,15 @@ export function FlavorEditor({
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
         <button className="btn btn-primary" disabled={loading}>
           {loading ? "Saving..." : "Save changes"}
+        </button>
+
+        <button
+          type="button"
+          className="btn"
+          disabled={duplicating}
+          onClick={handleDuplicate}
+        >
+          {duplicating ? "Duplicating..." : "Duplicate flavor"}
         </button>
 
         <button

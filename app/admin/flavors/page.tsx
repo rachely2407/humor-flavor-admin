@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { DuplicateFlavorButton } from "@/components/duplicate-flavor-button";
 import { AdminShell } from "@/components/admin-shell";
 import { requireMatrixOrSuperadmin } from "@/lib/requireMatrixOrSuperadmin";
 import { supabaseAdmin } from "@/lib/supabaseAdmin";
@@ -136,6 +137,7 @@ export default async function AdminFlavorsPage() {
                   <th style={thStyle}>Label</th>
                   <th style={thStyle}>Description</th>
                   <th style={thStyle}>Created</th>
+                  <th style={thStyle}>Duplicate</th>
                   <th style={thStyle}>Open</th>
                 </tr>
               </thead>
@@ -151,6 +153,9 @@ export default async function AdminFlavorsPage() {
                       {flavor.created_datetime_utc
                         ? new Date(flavor.created_datetime_utc).toLocaleString()
                         : "—"}
+                    </td>
+                    <td style={tdStyle}>
+                      <DuplicateFlavorButton flavorId={Number(flavor.id)} />
                     </td>
                     <td style={tdStyle}>
                       <Link href={`/admin/flavors/${flavor.id}`} style={openBtnStyle}>
